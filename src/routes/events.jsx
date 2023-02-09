@@ -3,6 +3,7 @@ import { axiosInstance } from "../utils/axios.js";
 import { Flex, Card, Heading, Text, Image, Stack, CardBody, ButtonGroup, Button, CardFooter, SimpleGrid } from '@chakra-ui/react'
 import HeaderNav from "../components/organisms/headerNav.jsx"
 import Moment from 'react-moment';
+import 'moment-timezone';
 
 function Events() {
     const [Events, setEvents] = useState();
@@ -46,9 +47,9 @@ function Events() {
                                     <Heading size='md'>{e.title}</Heading>
                                     <Moment format="YYYY/MM/DD">{e.date}</Moment>
                                     <Flex>
-                                    <Moment format="HH:MM">{e.start_time}</Moment>
-                                    <Text> - </Text>
-                                    <Moment format="HH:MM">{e.end_time}</Moment>
+                                        <Moment unix tz="Asia/Tokyo" format="hh:mm">{e.start_time}</Moment>
+                                        <Text> - </Text>
+                                        <Moment format="HH:MM">{e.end_time}</Moment>
                                     </Flex>
                                     <Text>@{e.place}</Text>
                                 </Stack>
