@@ -1,11 +1,14 @@
-import { Link } from "react-router-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Events from "./routes/events.jsx";
 import './App.css';
 
 function App() {
   return (
-    <div className="App">
-      <h1>TOP</h1>
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route path="events" element={<Events />}/>
+      </Routes>
+    </BrowserRouter>
   );
 }
 
