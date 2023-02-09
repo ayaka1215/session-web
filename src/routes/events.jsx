@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { axiosInstance } from "../utils/axios.js";
-import { Card, Heading, Text, Image, Stack, CardBody, ButtonGroup, Button, CardFooter } from '@chakra-ui/react'
+import { Card, Heading, Text, Image, Stack, CardBody, ButtonGroup, Button, CardFooter, SimpleGrid } from '@chakra-ui/react'
 
 function Events() {
     const [Events, setEvents] = useState();
@@ -13,11 +13,17 @@ function Events() {
    }, []);
  
     return (
-        <div>
-            <h1>イベント一覧画面</h1>
+        <div style={{ margin: "auto", width: "1000px" }}>
+            <Heading as='h1' size='lg' noOfLines={1}>
+                イベント一覧
+            </Heading>
             <div>
+
+            </div>
+            
+            <SimpleGrid columns={3} spacingX='40px' spacingY='20px'>
                 {Events?.map((e) => {
-                    return (                        
+                    return (                 
                         <Card maxW='sm'>
                             <CardBody>
                                 <Image
@@ -47,7 +53,7 @@ function Events() {
                         </Card>
                         );
                     })}
-            </div>
+                </SimpleGrid>
         </div>
     );
  }
