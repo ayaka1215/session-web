@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { axiosInstance } from "../utils/axios.js";
 import { Card, Heading, Text, Image, Stack, CardBody, ButtonGroup, Button, CardFooter, SimpleGrid } from '@chakra-ui/react'
+import HeaderNav from "../components/organisms/headerNav.jsx"
 
 function Events() {
     const [Events, setEvents] = useState();
@@ -11,12 +12,21 @@ function Events() {
       };
     f();
    }, []);
+
+    const handleToDate = str => {
+        const d = new Date(str);
+        d.setMinutes(d.getMinutes() - d.getTimezoneOffset());
+        const p = d.toJSON().match(/\d+/g);
+        return `${p[0]}/${+p[1]}/${+p[2]}`;
+    };
  
     return (
-        <div style={{ margin: "auto", width: "1000px" }}>
-            <Heading as='h1' size='lg' noOfLines={1} mb={5}>
-                イベント一覧
-            </Heading>
+        <>
+        <HeaderNav />
+            <div style={{ margin: "auto", width: "1000px" }}>
+                <Heading as='h1' size='lg' noOfLines={1} mb={5}>
+                    イベント一覧
+                </Heading>
             <div>
 
             </div>
@@ -33,6 +43,7 @@ function Events() {
                                 />
                                 <Stack mt='6' spacing='3'>
                                     <Heading size='md'>{e.title}</Heading>
+                                    <Text>{handleToDate(e.date)}</Text>
                                     <Text>{e.start_time} - {e.end_time}</Text>
                                     <Text>@{e.place}</Text>
                                 </Stack>
@@ -54,7 +65,8 @@ function Events() {
                         );
                     })}
                 </SimpleGrid>
-        </div>
+            </div>
+        </>
     );
  }
  
