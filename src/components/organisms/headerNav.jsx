@@ -6,7 +6,9 @@ function headerNav () {
         <Box p='2'>
             <Heading size='md'>Session App</Heading>
         </Box>
-        <Text></Text>
+        <Text>マイページ</Text>
+        <Text>予約一覧</Text>
+        <Text>ログアウト</Text>
         </Flex>
     );
 
