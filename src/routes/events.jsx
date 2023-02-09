@@ -14,7 +14,7 @@ function Events() {
  
     return (
         <div style={{ margin: "auto", width: "1000px" }}>
-            <Heading as='h1' size='lg' noOfLines={1}>
+            <Heading as='h1' size='lg' noOfLines={1} mb={5}>
                 イベント一覧
             </Heading>
             <div>
