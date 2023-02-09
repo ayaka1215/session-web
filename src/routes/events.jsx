@@ -1,7 +1,8 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, React } from "react";
 import { axiosInstance } from "../utils/axios.js";
-import { Card, Heading, Text, Image, Stack, CardBody, ButtonGroup, Button, CardFooter, SimpleGrid } from '@chakra-ui/react'
+import { Flex, Card, Heading, Text, Image, Stack, CardBody, ButtonGroup, Button, CardFooter, SimpleGrid } from '@chakra-ui/react'
 import HeaderNav from "../components/organisms/headerNav.jsx"
+import Moment from 'react-moment';
 
 function Events() {
     const [Events, setEvents] = useState();
@@ -43,8 +44,12 @@ function Events() {
                                 />
                                 <Stack mt='6' spacing='3'>
                                     <Heading size='md'>{e.title}</Heading>
-                                    <Text>{handleToDate(e.date)}</Text>
-                                    <Text>{e.start_time} - {e.end_time}</Text>
+                                    <Moment format="YYYY/MM/DD">{e.date}</Moment>
+                                    <Flex>
+                                    <Moment format="HH:MM">{e.start_time}</Moment>
+                                    <Text> - </Text>
+                                    <Moment format="HH:MM">{e.end_time}</Moment>
+                                    </Flex>
                                     <Text>@{e.place}</Text>
                                 </Stack>
                             </CardBody>
