@@ -12,7 +12,7 @@ import {
   CardFooter,
   SimpleGrid,
 } from "@chakra-ui/react";
-import HeaderNav from "../components/organisms/headerNav.jsx";
+import HeaderNav from "../components/organisms/HeaderNav.jsx";
 import { format } from "date-fns";
 import ja from "date-fns/locale/ja";
 
