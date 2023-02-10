@@ -18,15 +18,11 @@ function Events() {
     return (
         <>
         <HeaderNav />
-            <div style={{ margin: "auto", width: "1000px" }}>
-                <Heading as='h1' size='lg' noOfLines={1} mb={5}>
+            <div style={{ margin: "auto", maxWidth: "1000px" }}>
+                <Heading as='h1' size='lg' noOfLines={1} mb='5' mt='5' ml='2'>
                     イベント一覧
                 </Heading>
-            <div>
-
-            </div>
-            
-            <SimpleGrid columns={3} spacingX='40px' spacingY='20px'>
+            <SimpleGrid columns={[1, null, 3]} spacingX='40px' spacingY='20px'>
                 {Events?.map((e) => {
                     return (                 
                         <Card maxW='sm'>
@@ -36,10 +32,9 @@ function Events() {
                                     alt='Green double couch with wooden legs'
                                     borderRadius='lg'
                                 />
-                                <Stack mt='6' spacing='3'>
+                                <Stack mt='6' spacing='2'>
                                     <Heading size='md'>{e.title}</Heading>
-                                    <Text>{format(new Date(e.date), "yyyy年M月d日", { locale: ja })}</Text>                                    
-                                    <Text>{format(new Date(e.start_time), "HH:mm", { locale: ja })} - {format(new Date(e.end_time), "HH:mm", { locale: ja })}</Text>
+                                    <Text>{format(new Date(e.date), "yyyy年M月d日", { locale: ja })} {format(new Date(e.start_time), "HH:mm", { locale: ja })} - {format(new Date(e.end_time), "HH:mm", { locale: ja })}</Text>
                                     <Text>@{e.place}</Text>
                                 </Stack>
                             </CardBody>
