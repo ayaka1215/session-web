@@ -1,6 +1,6 @@
 import { useState, useEffect, React } from "react";
 import { axiosInstance } from "../utils/axios.js";
-import { Flex, Card, Heading, Text, Image, Stack, CardBody, ButtonGroup, Button, CardFooter, SimpleGrid } from '@chakra-ui/react'
+import { Card, Heading, Text, Image, Stack, CardBody, ButtonGroup, Button, CardFooter, SimpleGrid } from '@chakra-ui/react'
 import HeaderNav from "../components/organisms/headerNav.jsx"
 import { format } from 'date-fns'
 import ja from "date-fns/locale/ja";
@@ -14,13 +14,6 @@ function Events() {
       };
     f();
    }, []);
-
-    const handleToDate = str => {
-        const d = new Date(str);
-        d.setMinutes(d.getMinutes() - d.getTimezoneOffset());
-        const p = d.toJSON().match(/\d+/g);
-        return `${p[0]}/${+p[1]}/${+p[2]}`;
-    };
  
     return (
         <>
