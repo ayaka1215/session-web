@@ -2,6 +2,8 @@ import { useState, useEffect, React } from "react";
 import { axiosInstance } from "../utils/axios.js";
 import { Flex, Card, Heading, Text, Image, Stack, CardBody, ButtonGroup, Button, CardFooter, SimpleGrid } from '@chakra-ui/react'
 import HeaderNav from "../components/organisms/headerNav.jsx"
+import { format } from 'date-fns'
+import ja from "date-fns/locale/ja";
 
 function Events() {
     const [Events, setEvents] = useState();
@@ -43,12 +45,8 @@ function Events() {
                                 />
                                 <Stack mt='6' spacing='3'>
                                     <Heading size='md'>{e.title}</Heading>
-                                    <Text>{e.date}</Text>
-                                    <Flex>
-                                        <Text>{e.start_time}</Text>
-                                        <Text> - </Text>
-                                        <Text>{e.end_time}</Text>
-                                    </Flex>
+                                    <Text>{format(new Date(e.date), "yyyy年M月d日", { locale: ja })}</Text>                                    
+                                    <Text>{format(new Date(e.start_time), "HH:mm", { locale: ja })} - {format(new Date(e.end_time), "HH:mm", { locale: ja })}</Text>
                                     <Text>@{e.place}</Text>
                                 </Stack>
                             </CardBody>
