@@ -22,15 +22,19 @@ function CreateEvent() {
   const navigate = useNavigate();
 
   const onClick = async () => {
-    await axiosInstance.post("/events", {
-      title,
-      content,
-      date,
-      startTime,
-      endTime,
-      place,
-    });
-    navigate("/events", { replace: true });
+    try {
+      await axiosInstance.post("/events", {
+        title,
+        content,
+        date,
+        startTime,
+        endTime,
+        place,
+      });
+      navigate("/events", { replace: true });
+    } catch (e) {
+      console.log(e);
+    }
   };
 
   return (
