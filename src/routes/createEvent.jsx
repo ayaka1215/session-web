@@ -80,7 +80,7 @@ function CreateEvent() {
         </Flex>
         <VStack spacing={6} mx={2}>
           <FormControl isRequired>
-            <FormLabel>イベントタイトル</FormLabel>
+            <FormLabel>タイトル</FormLabel>
             <Input
               type="text"
               value={title}
