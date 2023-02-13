@@ -20,19 +20,27 @@ function CreateEvent() {
   const [start_time, setStartTime] = useState("");
   const [end_time, setEndTime] = useState("");
   const [place, setPlace] = useState("");
+  const [image, setImage] = useState("");
   const navigate = useNavigate();
   const toast = useToast();
 
+  const createFormData = () => {
+    const formData = new FormData();
+    if (!image) return;
+    formData.append("event[title]", title);
+    formData.append("event[content]", content);
+    formData.append("event[date]", date);
+    formData.append("event[start_time]", start_time);
+    formData.append("event[end_time]", end_time);
+    formData.append("event[place]", place);
+    formData.append("event[image]", image);
+    return formData;
+  };
+
   const onClick = async () => {
     try {
-      await axiosInstance.post("/events", {
-        title,
-        content,
-        date,
-        start_time,
-        end_time,
-        place,
-      });
+      const data = createFormData();
+      await axiosInstance.post("/events", data);
       navigate("/events", { replace: true });
       toast({
         title: "イベントを作成しました。",
@@ -113,6 +121,15 @@ function CreateEvent() {
               value={place}
               onChange={(e) => setPlace(e.target.value)}
               placeholder="開催場所を入力してください。"
+            />
+          </FormControl>
+          <FormControl>
+            <FormLabel>画像</FormLabel>
+            <Input
+              type="file"
+              onChange={(e) => setImage(e.target.files[0])}
+              border="none"
+              padding="1"
             />
           </FormControl>
           <Button colorScheme="teal" onClick={onClick} width="300px" mt="5">
