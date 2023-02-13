@@ -14,7 +14,7 @@ import {
   Spacer,
   Flex,
 } from "@chakra-ui/react";
-import HeaderNav from "../components/organisms/HeaderNav.jsx";
+import Common from "../components/layout/Common.jsx";
 
 function CreateEvent() {
   const [title, setTitle] = useState("");
@@ -66,8 +66,7 @@ function CreateEvent() {
   };
 
   return (
-    <>
-      <HeaderNav />
+    <Common>
       <div style={{ margin: "auto", maxWidth: "1000px" }}>
         <Flex mb="10" mt="5">
           <Heading as="h1" size="lg" noOfLines={1} ml="2">
@@ -147,7 +146,7 @@ function CreateEvent() {
           </Button>
         </VStack>
       </div>
-    </>
+    </Common>
   );
 }
 
