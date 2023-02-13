@@ -20,7 +20,7 @@ import { format } from "date-fns";
 import ja from "date-fns/locale/ja";
 
 function Events() {
-  const [Events, setEvents] = useState();
+  const [events, setEvents] = useState();
   useEffect(() => {
     const f = async () => {
       const res = await axiosInstance.get("/events");
@@ -43,7 +43,7 @@ function Events() {
           </Button>
         </Flex>
         <SimpleGrid columns={[1, null, 3]} spacingX="40px" spacingY="20px">
-          {Events?.map((e) => {
+          {events?.map((e) => {
             return (
               <Card maxW="sm">
                 <CardBody>
