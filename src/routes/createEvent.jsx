@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { useState, React } from "react";
 import { axiosInstance } from "../utils/axios.js";
@@ -10,6 +11,8 @@ import {
   Button,
   VStack,
   useToast,
+  Spacer,
+  Flex,
 } from "@chakra-ui/react";
 import HeaderNav from "../components/organisms/HeaderNav.jsx";
 
@@ -66,9 +69,15 @@ function CreateEvent() {
     <>
       <HeaderNav />
       <div style={{ margin: "auto", maxWidth: "1000px" }}>
-        <Heading as="h1" size="lg" noOfLines={1} mb="10" mt="5" ml="2">
-          イベント新規作成
-        </Heading>
+        <Flex mb="10" mt="5">
+          <Heading as="h1" size="lg" noOfLines={1} ml="2">
+            イベント新規作成
+          </Heading>
+          <Spacer />
+          <Button variant="ghost" colorScheme="teal" mr="5">
+            <Link to="/events">一覧へ戻る</Link>
+          </Button>
+        </Flex>
         <VStack spacing={6} mx={2}>
           <FormControl isRequired>
             <FormLabel>イベントタイトル</FormLabel>

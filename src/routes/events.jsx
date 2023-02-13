@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { useState, useEffect, React } from "react";
 import { axiosInstance } from "../utils/axios.js";
 import {
@@ -11,6 +12,8 @@ import {
   Button,
   CardFooter,
   SimpleGrid,
+  Flex,
+  Spacer,
 } from "@chakra-ui/react";
 import HeaderNav from "../components/organisms/HeaderNav.jsx";
 import { format } from "date-fns";
@@ -30,9 +33,15 @@ function Events() {
     <>
       <HeaderNav />
       <div style={{ margin: "auto", maxWidth: "1000px" }}>
-        <Heading as="h1" size="lg" noOfLines={1} mb="5" mt="5" ml="2">
-          イベント一覧
-        </Heading>
+        <Flex mb="5" mt="5">
+          <Heading as="h1" size="lg" noOfLines={1} ml="5">
+            イベント一覧
+          </Heading>
+          <Spacer />
+          <Button colorScheme="teal" mr="5">
+            <Link to="/events/create">新規作成</Link>
+          </Button>
+        </Flex>
         <SimpleGrid columns={[1, null, 3]} spacingX="40px" spacingY="20px">
           {Events?.map((e) => {
             return (
