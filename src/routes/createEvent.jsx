@@ -26,14 +26,15 @@ function CreateEvent() {
 
   const createFormData = () => {
     const formData = new FormData();
-    if (!image) return;
     formData.append("event[title]", title);
     formData.append("event[content]", content);
     formData.append("event[date]", date);
     formData.append("event[start_time]", start_time);
     formData.append("event[end_time]", end_time);
     formData.append("event[place]", place);
-    formData.append("event[image]", image);
+    if (image) {
+      formData.append("event[image]", image);
+    }
     return formData;
   };
 
