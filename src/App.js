@@ -9,6 +9,7 @@ function App() {
       <Routes>
         <Route path="events" element={<Events />} />
         <Route path="events/create" element={<CreateEvent />} />
+        <Route path="events/:id" element={<Event />} />
       </Routes>
     </BrowserRouter>
   );
