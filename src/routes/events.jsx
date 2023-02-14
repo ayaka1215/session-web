@@ -80,7 +80,9 @@ function Events() {
                   <CardFooter>
                     <ButtonGroup spacing="2">
                       <Button variant="solid" colorScheme="blue">
-                        詳細
+                        <Link to={`/events/${e.id}`} key={e.id}>
+                          詳細
+                        </Link>
                       </Button>
                       <Button variant="ghost" colorScheme="blue">
                         編集
