@@ -1,6 +1,7 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Events from "./routes/events.jsx";
 import CreateEvent from "./routes/createEvent.jsx";
+import Event from "./routes/event.jsx";
 import "./App.css";
 
 function App() {
