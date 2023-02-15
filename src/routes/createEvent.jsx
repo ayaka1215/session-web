@@ -13,6 +13,7 @@ import {
   useToast,
   Spacer,
   Flex,
+  Center,
 } from "@chakra-ui/react";
 import Common from "../components/layout/Common.jsx";
 
@@ -141,10 +142,12 @@ function CreateEvent() {
               padding="1"
             />
           </FormControl>
-          <Button colorScheme="teal" onClick={onClick} width="300px" mt="5">
+        </VStack>
+        <Center my="10">
+          <Button colorScheme="teal" onClick={onClick} width="300px">
             作成する
           </Button>
-        </VStack>
+        </Center>
       </div>
     </Common>
   );
