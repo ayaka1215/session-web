@@ -2,16 +2,12 @@ import { Link, useParams } from "react-router-dom";
 import { useState, useEffect, React } from "react";
 import { axiosInstance } from "../utils/axios.js";
 import {
-  Card,
   Heading,
   Text,
   Image,
   Stack,
-  CardBody,
   ButtonGroup,
   Button,
-  CardFooter,
-  SimpleGrid,
   Flex,
   Spacer,
   Center,
@@ -37,14 +33,16 @@ function Event() {
     <>
       <Common>
         <div style={{ margin: "auto", maxWidth: "650px", padding: "5px" }}>
-          <Flex mb="5" mt="5">
+          <Flex my="5">
             <Spacer />
-            <Button variant="ghost" colorScheme="blue">
-              編集
-            </Button>
-            <Button variant="ghost" colorScheme="blue">
-              削除
-            </Button>
+            <ButtonGroup>
+              <Button variant="ghost" colorScheme="teal">
+                編集
+              </Button>
+              <Button variant="ghost" colorScheme="teal">
+                削除
+              </Button>
+            </ButtonGroup>
           </Flex>
           {event && (
             <>
@@ -82,17 +80,17 @@ function Event() {
               </Stack>
               <Box
                 mt="6"
-                bg={"gray.100"}
-                rounded="md"
                 p="5"
+                rounded="md"
+                bg={"gray.100"}
                 border="1px"
                 borderColor="gray.100"
               >
                 <Text fontWeight="bold">イベント概要</Text>
                 <Text mt="5">{event.content}</Text>
               </Box>
-              <Center>
-                <Button colorScheme="teal" width="300px" my="10">
+              <Center my="10">
+                <Button colorScheme="teal" width="300px">
                   このイベントを予約する
                 </Button>
               </Center>
