@@ -52,7 +52,6 @@ function Event() {
                   alt={event.title}
                   borderRadius="lg"
                   Width="100%"
-                  Height="100%"
                 />
               ) : (
                 <Image
