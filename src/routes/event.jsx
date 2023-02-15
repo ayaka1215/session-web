@@ -51,18 +51,18 @@ function Event() {
                   src={event.image.url}
                   alt={event.title}
                   borderRadius="lg"
-                  maxWidth="100%"
-                  maxHeight="156px"
+                  Width="100%"
+                  Height="100%"
                 />
               ) : (
                 <Image
                   src={`${process.env.PUBLIC_URL}/event_no_image.png`}
                   alt={event.title}
                   borderRadius="lg"
-                  maxWidth="100%"
+                  Width="100%"
                 />
               )}
-              <Stack mt="6" mx="2" spacing="2">
+              <Stack mt="6" mx="4" spacing="2">
                 <Heading size="md">{event.title}</Heading>
                 <Text>
                   {format(new Date(event.date), "yyyy年M月d日", {
@@ -80,14 +80,16 @@ function Event() {
               </Stack>
               <Box
                 mt="6"
-                p="5"
+                p="6"
                 rounded="md"
                 bg={"gray.100"}
                 border="1px"
                 borderColor="gray.100"
               >
                 <Text fontWeight="bold">イベント概要</Text>
-                <Text mt="5">{event.content}</Text>
+                <Text mt="5" whiteSpace="pre-line">
+                  {event.content}
+                </Text>
               </Box>
               <Center my="10">
                 <Button colorScheme="teal" width="300px">
