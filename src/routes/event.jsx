@@ -49,40 +49,42 @@ function Event() {
           </Flex>
           <SimpleGrid columns={[1, null, 3]} spacingX="40px" spacingY="20px">
             <Card maxW="sm">
-              <CardBody>
-                {event.image?.url ? (
-                  <Image
-                    src={event.image.url}
-                    alt={event.title}
-                    borderRadius="lg"
-                    width="100%"
-                    maxHeight="156px"
-                  />
-                ) : (
-                  <Image
-                    src={`${process.env.PUBLIC_URL}/event_no_image.png`}
-                    alt={event.title}
-                    borderRadius="lg"
-                  />
-                )}
-                <Stack mt="6" spacing="2">
-                  <Heading size="md">{event.title}</Heading>
-                  <Text>
-                    {format(new Date(event.date), "yyyy年M月d日", {
-                      locale: ja,
-                    })}{" "}
-                    {format(new Date(event.start_time), "HH:mm", {
-                      locale: ja,
-                    })}{" "}
-                    -{" "}
-                    {format(new Date(event.end_time), "HH:mm", {
-                      locale: ja,
-                    })}
-                  </Text>
-                  <Text>@{event.place}</Text>
-                  <Text>{event.content}</Text>
-                </Stack>
-              </CardBody>
+              {event && (
+                <CardBody>
+                  {event.image?.url ? (
+                    <Image
+                      src={event.image.url}
+                      alt={event.title}
+                      borderRadius="lg"
+                      width="100%"
+                      maxHeight="156px"
+                    />
+                  ) : (
+                    <Image
+                      src={`${process.env.PUBLIC_URL}/event_no_image.png`}
+                      alt={event.title}
+                      borderRadius="lg"
+                    />
+                  )}
+                  <Stack mt="6" spacing="2">
+                    <Heading size="md">{event.title}</Heading>
+                    <Text>
+                      {format(new Date(event.date), "yyyy年M月d日", {
+                        locale: ja,
+                      })}{" "}
+                      {format(new Date(event.start_time), "HH:mm", {
+                        locale: ja,
+                      })}{" "}
+                      -{" "}
+                      {format(new Date(event.end_time), "HH:mm", {
+                        locale: ja,
+                      })}
+                    </Text>
+                    <Text>@{event.place}</Text>
+                    <Text>{event.content}</Text>
+                  </Stack>
+                </CardBody>
+              )}
             </Card>
           </SimpleGrid>
         </div>
