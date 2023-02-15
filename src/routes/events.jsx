@@ -84,9 +84,11 @@ function Events() {
                           詳細
                         </Button>
                       </Link>
-                      <Button variant="ghost" colorScheme="blue">
-                        編集
-                      </Button>
+                      <Link to={`/events/${e.id}/edit`} key={e.id}>
+                        <Button variant="ghost" colorScheme="blue">
+                          編集
+                        </Button>
+                      </Link>
                       <Button variant="ghost" colorScheme="blue">
                         削除
                       </Button>
