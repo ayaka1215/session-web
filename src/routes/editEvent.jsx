@@ -15,18 +15,11 @@ import {
   Center,
 } from "@chakra-ui/react";
 import Common from "../components/layout/Common.jsx";
+import { format } from "date-fns";
 
 function EditEvent() {
-  useEffect(() => {
-    const f = async () => {
-      const res = await axiosInstance.get(`/events/${params.id}`);
-      setEvent(res.data);
-    };
-    f();
-  }, []);
-
   const [event, setEvent] = useState("");
-  const [title, setTitle] = useState(event.title);
+  const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [date, setDate] = useState("");
   const [start_time, setStartTime] = useState("");
@@ -36,7 +29,20 @@ function EditEvent() {
   const navigate = useNavigate();
   const toast = useToast();
   const params = useParams();
-  console.log(event);
+
+  useEffect(() => {
+    const f = async () => {
+      const res = await axiosInstance.get(`/events/${params.id}`);
+      setEvent(res.data);
+      setTitle(event.title);
+      setContent(event.content);
+      setDate(event.date);
+      setStartTime(event.start_time);
+      setEndTime(event.end_time);
+      setPlace(event.place);
+    };
+    f();
+  }, []);
 
   const createFormData = () => {
     const formData = new FormData();
@@ -55,7 +61,7 @@ function EditEvent() {
   const onClick = async () => {
     try {
       const data = createFormData();
-      await axiosInstance.put("/events", data);
+      await axiosInstance.put(`events/${params.id}`, data);
       navigate("/events", { replace: true });
       toast({
         title: "イベントを更新しました。",
@@ -94,7 +100,7 @@ function EditEvent() {
               <FormLabel>タイトル</FormLabel>
               <Input
                 type="text"
-                value={event.title}
+                value={title}
                 onChange={(e) => setTitle(e.target.value)}
                 placeholder="イベントタイトルを入力してください。"
               />
@@ -103,7 +109,7 @@ function EditEvent() {
               <FormLabel>内容</FormLabel>
               <Textarea
                 type="text"
-                value={event.content}
+                value={content}
                 onChange={(e) => setContent(e.target.value)}
                 placeholder="イベント内容を入力してください。"
               />
@@ -113,7 +119,7 @@ function EditEvent() {
               <Input
                 maxWidth="200px"
                 type="date"
-                value={event.date}
+                value={date}
                 onChange={(e) => setDate(e.target.value)}
               />
             </FormControl>
@@ -122,7 +128,7 @@ function EditEvent() {
               <Input
                 maxWidth="200px"
                 type="time"
-                value={event.start_time}
+                value={start_time}
                 onChange={(e) => setStartTime(e.target.value)}
               />
             </FormControl>
@@ -131,7 +137,7 @@ function EditEvent() {
               <Input
                 maxWidth="200px"
                 type="time"
-                value={event.end_time}
+                value={end_time}
                 onChange={(e) => setEndTime(e.target.value)}
               />
             </FormControl>
@@ -139,7 +145,7 @@ function EditEvent() {
               <FormLabel>開催場所</FormLabel>
               <Input
                 type="text"
-                value={event.place}
+                value={place}
                 onChange={(e) => setPlace(e.target.value)}
                 placeholder="開催場所を入力してください。"
               />
@@ -157,7 +163,7 @@ function EditEvent() {
         )}
         <Center my="10">
           <Button colorScheme="teal" onClick={onClick} width="300px">
-            作成する
+            更新する
           </Button>
         </Center>
       </div>
