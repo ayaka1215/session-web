@@ -49,10 +49,8 @@ function EditEvent() {
     formData.append("event[title]", title);
     formData.append("event[content]", content);
     formData.append("event[date]", date);
-    const new_start_time = new Date(start_time);
-    const new_end_time = new Date(end_time);
-    formData.append("event[start_time]", new_start_time);
-    formData.append("event[end_time]", new_end_time);
+    formData.append("event[start_time]", start_time);
+    formData.append("event[end_time]", end_time);
     formData.append("event[place]", place);
     if (image) {
       formData.append("event[image]", image);
@@ -155,6 +153,7 @@ function EditEvent() {
                   console.log(typeof e.target.value);
                 }}
               />
+              {console.log(end_time)}
             </FormControl>
             <FormControl isRequired>
               <FormLabel>開催場所</FormLabel>
