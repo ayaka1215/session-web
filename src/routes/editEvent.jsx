@@ -155,7 +155,6 @@ function EditEvent() {
               <FormLabel>画像</FormLabel>
               <Input
                 type="file"
-                value={image}
                 onChange={(e) => setImage(e.target.files[0])}
                 border="none"
                 padding="1"
