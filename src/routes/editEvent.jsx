@@ -34,12 +34,12 @@ function EditEvent() {
     const f = async () => {
       const res = await axiosInstance.get(`/events/${params.id}`);
       setEvent(res.data);
-      setTitle(event.title);
-      setContent(event.content);
-      setDate(event.date);
-      setStartTime(event.start_time);
-      setEndTime(event.end_time);
-      setPlace(event.place);
+      setTitle(res.data.title);
+      setContent(res.data.content);
+      setDate(res.data.date);
+      setStartTime(res.data.start_time);
+      setEndTime(res.data.end_time);
+      setPlace(res.data.place);
     };
     f();
   }, []);
@@ -49,13 +49,25 @@ function EditEvent() {
     formData.append("event[title]", title);
     formData.append("event[content]", content);
     formData.append("event[date]", date);
-    formData.append("event[start_time]", start_time);
-    formData.append("event[end_time]", end_time);
+    const new_start_time = new Date(start_time);
+    const new_end_time = new Date(end_time);
+    formData.append("event[start_time]", new_start_time);
+    formData.append("event[end_time]", new_end_time);
     formData.append("event[place]", place);
     if (image) {
       formData.append("event[image]", image);
     }
     return formData;
+  };
+
+  const formatDate = (date) => {
+    const d = new Date(date);
+    if (d == "Invalid Date") return date;
+    let hour = `${d.getHours()}`;
+    let min = `${d.getMinutes()}`;
+    if (hour <= 9) hour = `0${hour}`;
+    if (min <= 9) min = `0${min}`;
+    return `${hour}:${min}`;
   };
 
   const onClick = async () => {
@@ -128,7 +140,7 @@ function EditEvent() {
               <Input
                 maxWidth="200px"
                 type="time"
-                value={start_time}
+                value={formatDate(start_time)}
                 onChange={(e) => setStartTime(e.target.value)}
               />
             </FormControl>
@@ -137,8 +149,11 @@ function EditEvent() {
               <Input
                 maxWidth="200px"
                 type="time"
-                value={end_time}
-                onChange={(e) => setEndTime(e.target.value)}
+                value={formatDate(end_time)}
+                onChange={(e) => {
+                  setEndTime(e.target.value);
+                  console.log(typeof e.target.value);
+                }}
               />
             </FormControl>
             <FormControl isRequired>
@@ -154,6 +169,7 @@ function EditEvent() {
               <FormLabel>画像</FormLabel>
               <Input
                 type="file"
+                value={image}
                 onChange={(e) => setImage(e.target.files[0])}
                 border="none"
                 padding="1"
