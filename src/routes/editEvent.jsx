@@ -58,16 +58,6 @@ function EditEvent() {
     return formData;
   };
 
-  const formatDate = (date) => {
-    const d = new Date(date);
-    if (d == "Invalid Date") return date;
-    let hour = `${d.getHours()}`;
-    let min = `${d.getMinutes()}`;
-    if (hour <= 9) hour = `0${hour}`;
-    if (min <= 9) min = `0${min}`;
-    return `${hour}:${min}`;
-  };
-
   const onClick = async () => {
     try {
       const data = createFormData();
@@ -138,7 +128,7 @@ function EditEvent() {
               <Input
                 maxWidth="200px"
                 type="time"
-                value={formatDate(start_time)}
+                value={start_time}
                 onChange={(e) => setStartTime(e.target.value)}
               />
             </FormControl>
@@ -147,13 +137,11 @@ function EditEvent() {
               <Input
                 maxWidth="200px"
                 type="time"
-                value={formatDate(end_time)}
+                value={end_time}
                 onChange={(e) => {
                   setEndTime(e.target.value);
-                  console.log(typeof e.target.value);
                 }}
               />
-              {console.log(end_time)}
             </FormControl>
             <FormControl isRequired>
               <FormLabel>開催場所</FormLabel>

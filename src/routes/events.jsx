@@ -68,11 +68,7 @@ function Events() {
                         {format(new Date(e.date), "yyyy年M月d日", {
                           locale: ja,
                         })}{" "}
-                        {format(new Date(e.start_time), "HH:mm", {
-                          locale: ja,
-                        })}{" "}
-                        -{" "}
-                        {format(new Date(e.end_time), "HH:mm", { locale: ja })}
+                        {e.start_time} - {e.end_time}
                       </Text>
                       <Text>@{e.place}</Text>
                     </Stack>
