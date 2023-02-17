@@ -15,7 +15,6 @@ import {
   Center,
 } from "@chakra-ui/react";
 import Common from "../components/layout/Common.jsx";
-import { format } from "date-fns";
 
 function EditEvent() {
   const [event, setEvent] = useState("");
