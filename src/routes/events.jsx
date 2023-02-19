@@ -35,8 +35,9 @@ function Events() {
   const destroyEvent = async (id) => {
     try {
       await axiosInstance.delete(`events/${id}`);
+      fetch();
       toast({
-        title: "イベントを作成しました。",
+        title: "イベントを削除しました。",
         description: "",
         status: "success",
         duration: 9000,
@@ -46,7 +47,6 @@ function Events() {
       console.log(e);
       toast({
         title: "エラーが発生しました。",
-        description: "入力内容を確認してください。",
         status: "error",
         duration: 9000,
         isClosable: true,
@@ -113,7 +113,7 @@ function Events() {
                       <Button
                         variant="ghost"
                         colorScheme="blue"
-                        onClick={destroyEvent}
+                        onClick={() => destroyEvent(e.id)}
                       >
                         削除
                       </Button>
