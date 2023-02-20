@@ -33,24 +33,27 @@ function Events() {
   }, []);
 
   const destroyEvent = async (id) => {
-    try {
-      await axiosInstance.delete(`events/${id}`);
-      setEvents(events.filter((event) => event.id !== id));
-      toast({
-        title: "イベントを削除しました。",
-        description: "",
-        status: "success",
-        duration: 9000,
-        isClosable: true,
-      });
-    } catch (e) {
-      console.log(e);
-      toast({
-        title: "エラーが発生しました。",
-        status: "error",
-        duration: 9000,
-        isClosable: true,
-      });
+    const is_ok = window.confirm("イベントを削除します。よろしいですか？");
+    if (is_ok) {
+      try {
+        await axiosInstance.delete(`events/${id}`);
+        setEvents(events.filter((event) => event.id !== id));
+        toast({
+          title: "イベントを削除しました。",
+          description: "",
+          status: "success",
+          duration: 9000,
+          isClosable: true,
+        });
+      } catch (e) {
+        console.log(e);
+        toast({
+          title: "エラーが発生しました。",
+          status: "error",
+          duration: 9000,
+          isClosable: true,
+        });
+      }
     }
   };
 
