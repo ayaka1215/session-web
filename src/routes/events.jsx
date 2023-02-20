@@ -35,7 +35,7 @@ function Events() {
   const destroyEvent = async (id) => {
     try {
       await axiosInstance.delete(`events/${id}`);
-      fetch();
+      setEvents(events.filter((event) => event.id !== id));
       toast({
         title: "イベントを削除しました。",
         description: "",
