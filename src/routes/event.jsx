@@ -1,4 +1,4 @@
-import { Link, useParams } from "react-router-dom";
+import { Link, useParams, useNavigate } from "react-router-dom";
 import { useState, useEffect, React } from "react";
 import { axiosInstance } from "../utils/axios.js";
 import {
@@ -12,6 +12,7 @@ import {
   Spacer,
   Center,
   Box,
+  useToast,
 } from "@chakra-ui/react";
 import Common from "../components/layout/Common.jsx";
 import { format } from "date-fns";
@@ -20,6 +21,8 @@ import ja from "date-fns/locale/ja";
 function Event() {
   const [event, setEvent] = useState();
   const params = useParams();
+  const toast = useToast();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const f = async () => {
@@ -29,22 +32,54 @@ function Event() {
     f();
   }, []);
 
+  const destroyEvent = async (id) => {
+    const is_ok = window.confirm("イベントを削除します。よろしいですか？");
+    if (is_ok) {
+      try {
+        await axiosInstance.delete(`events/${id}`);
+        navigate("/events", { replace: true });
+        toast({
+          title: "イベントを削除しました。",
+          description: "",
+          status: "success",
+          duration: 9000,
+          isClosable: true,
+        });
+      } catch (e) {
+        console.log(e);
+        toast({
+          title: "エラーが発生しました。",
+          status: "error",
+          duration: 9000,
+          isClosable: true,
+        });
+      }
+    }
+  };
+
   return (
     <>
       <Common>
-        <div style={{ margin: "auto", maxWidth: "650px", padding: "5px" }}>
-          <Flex my="5">
-            <Spacer />
-            <ButtonGroup>
-              <Button variant="ghost" colorScheme="teal">
-                編集
-              </Button>
-              <Button variant="ghost" colorScheme="teal">
-                削除
-              </Button>
-            </ButtonGroup>
-          </Flex>
-          {event && (
+        {event && (
+          <div style={{ margin: "auto", maxWidth: "650px", padding: "5px" }}>
+            <Flex my="5">
+              <Spacer />
+              <ButtonGroup>
+                <Link to={`/events/${event.id}/edit`}>
+                  <Button variant="ghost" colorScheme="teal">
+                    編集
+                  </Button>
+                </Link>
+                <Button
+                  variant="ghost"
+                  colorScheme="teal"
+                  onClick={() => destroyEvent(event.id)}
+                >
+                  削除
+                </Button>
+              </ButtonGroup>
+            </Flex>
+
             <>
               {event.image?.url ? (
                 <Image
@@ -67,13 +102,7 @@ function Event() {
                   {format(new Date(event.date), "yyyy年M月d日", {
                     locale: ja,
                   })}{" "}
-                  {format(new Date(event.start_time), "HH:mm", {
-                    locale: ja,
-                  })}{" "}
-                  -{" "}
-                  {format(new Date(event.end_time), "HH:mm", {
-                    locale: ja,
-                  })}
+                  {event.start_time}-{event.end_time}
                 </Text>
                 <Text>@{event.place}</Text>
               </Stack>
@@ -96,8 +125,8 @@ function Event() {
                 </Button>
               </Center>
             </>
-          )}
-        </div>
+          </div>
+        )}
       </Common>
     </>
   );

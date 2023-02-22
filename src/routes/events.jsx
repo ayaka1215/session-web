@@ -14,6 +14,7 @@ import {
   SimpleGrid,
   Flex,
   Spacer,
+  useToast,
 } from "@chakra-ui/react";
 import Common from "../components/layout/Common.jsx";
 import { format } from "date-fns";
@@ -21,6 +22,8 @@ import ja from "date-fns/locale/ja";
 
 function Events() {
   const [events, setEvents] = useState();
+  const toast = useToast();
+
   useEffect(() => {
     const f = async () => {
       const res = await axiosInstance.get("/events");
@@ -28,6 +31,31 @@ function Events() {
     };
     f();
   }, []);
+
+  const destroyEvent = async (id) => {
+    const is_ok = window.confirm("イベントを削除します。よろしいですか？");
+    if (is_ok) {
+      try {
+        await axiosInstance.delete(`events/${id}`);
+        setEvents(events.filter((event) => event.id !== id));
+        toast({
+          title: "イベントを削除しました。",
+          description: "",
+          status: "success",
+          duration: 9000,
+          isClosable: true,
+        });
+      } catch (e) {
+        console.log(e);
+        toast({
+          title: "エラーが発生しました。",
+          status: "error",
+          duration: 9000,
+          isClosable: true,
+        });
+      }
+    }
+  };
 
   return (
     <>
@@ -85,7 +113,11 @@ function Events() {
                           編集
                         </Button>
                       </Link>
-                      <Button variant="ghost" colorScheme="blue">
+                      <Button
+                        variant="ghost"
+                        colorScheme="blue"
+                        onClick={() => destroyEvent(e.id)}
+                      >
                         削除
                       </Button>
                     </ButtonGroup>
