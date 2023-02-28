@@ -33,8 +33,8 @@ function Events() {
   }, []);
 
   const destroyEvent = async (id) => {
-    const is_ok = window.confirm("イベントを削除します。よろしいですか？");
-    if (is_ok) {
+    const isOk = window.confirm("イベントを削除します。よろしいですか？");
+    if (isOk) {
       try {
         await deleteEvent(id);
         setEvents(events.filter((event) => event.id !== id));
