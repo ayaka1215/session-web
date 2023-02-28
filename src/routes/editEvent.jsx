@@ -1,6 +1,7 @@
 import { Link, useParams, useNavigate } from "react-router-dom";
 import { useState, useEffect, React } from "react";
 import { axiosInstance } from "../utils/axios.js";
+import { updateEvent } from "../lib/apiClient/event.js";
 import {
   Heading,
   FormControl,
@@ -60,7 +61,7 @@ function EditEvent() {
   const onClick = async () => {
     try {
       const data = createFormData();
-      await axiosInstance.put(`events/${params.id}`, data);
+      await updateEvent(params.id, data);
       navigate("/events", { replace: true });
       toast({
         title: "イベントを更新しました。",

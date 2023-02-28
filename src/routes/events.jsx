@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { useState, useEffect, React } from "react";
 import { axiosInstance } from "../utils/axios.js";
+import { getEventDetail, deleteEvent } from "../lib/apiClient/event.js";
 import {
   Card,
   Heading,
@@ -36,7 +37,7 @@ function Events() {
     const is_ok = window.confirm("イベントを削除します。よろしいですか？");
     if (is_ok) {
       try {
-        await axiosInstance.delete(`events/${id}`);
+        await deleteEvent(id);
         setEvents(events.filter((event) => event.id !== id));
         toast({
           title: "イベントを削除しました。",
