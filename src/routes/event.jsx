@@ -1,6 +1,6 @@
 import { Link, useParams, useNavigate } from "react-router-dom";
 import { useState, useEffect, React } from "react";
-import { axiosInstance } from "../utils/axios.js";
+import { getEventDetail, deleteEvent } from "../lib/apiClient/event.js";
 import {
   Heading,
   Text,
@@ -26,7 +26,7 @@ function Event() {
 
   useEffect(() => {
     const f = async () => {
-      const res = await axiosInstance.get(`/events/${params.id}`);
+      const res = await getEventDetail(params.id);
       setEvent(res.data);
     };
     f();
@@ -36,7 +36,7 @@ function Event() {
     const is_ok = window.confirm("イベントを削除します。よろしいですか？");
     if (is_ok) {
       try {
-        await axiosInstance.delete(`events/${id}`);
+        await deleteEvent(id);
         navigate("/events", { replace: true });
         toast({
           title: "イベントを削除しました。",
