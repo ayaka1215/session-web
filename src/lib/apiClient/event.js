@@ -1,5 +1,9 @@
 import { axiosInstance } from "../../utils/axios.js";
 
+export const getEventAll = () => {
+  return axiosInstance.get("/events");
+};
+
 export const getEventDetail = (id) => {
   return axiosInstance.get(`/events/${id}`);
 };

@@ -1,7 +1,6 @@
 import { Link } from "react-router-dom";
 import { useState, useEffect, React } from "react";
-import { axiosInstance } from "../utils/axios.js";
-import { getEventDetail, deleteEvent } from "../lib/apiClient/event.js";
+import { getEventAll, deleteEvent } from "../lib/apiClient/event.js";
 import {
   Card,
   Heading,
@@ -27,7 +26,7 @@ function Events() {
 
   useEffect(() => {
     const f = async () => {
-      const res = await axiosInstance.get("/events");
+      const res = await getEventAll();
       setEvents(res.data);
     };
     f();
