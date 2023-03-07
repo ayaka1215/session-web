@@ -1,5 +1,5 @@
 import React, { useState, useEffect, createContext } from "react";
-import { BrowserRouter, Routes, Route, useNavigate } from "react-router-dom";
+import { Routes, Route, useNavigate } from "react-router-dom";
 import Events from "./routes/events.jsx";
 import CreateEvent from "./routes/createEvent.jsx";
 import Event from "./routes/event.jsx";
@@ -60,29 +60,54 @@ function App() {
   };
 
   return (
-    <BrowserRouter>
-      <AuthContext.Provider
-        value={{
-          loading,
-          setLoading,
-          isSignedIn,
-          setIsSignedIn,
-          currentUser,
-          setCurrentUser,
-        }}
-      >
-        <Routes>
-          <Route exact path="/signup" element={<SignUp />} />
-          <Route exact path="/signin" element={<SignIn />} />
-          <Private>
-            <Route path="events" element={<Events />} />
-            <Route path="events/create" element={<CreateEvent />} />
-            <Route path="events/:id" element={<Event />} />
-            <Route path="events/:id/edit" element={<EditEvent />} />
-          </Private>
-        </Routes>
-      </AuthContext.Provider>
-    </BrowserRouter>
+    <AuthContext.Provider
+      value={{
+        loading,
+        setLoading,
+        isSignedIn,
+        setIsSignedIn,
+        currentUser,
+        setCurrentUser,
+      }}
+    >
+      <Routes>
+        <Route exact path="/signup" element={<SignUp />} />
+        <Route exact path="/signin" element={<SignIn />} />
+
+        <Route
+          path="events"
+          element={
+            <Private path="events">
+              <Events />
+            </Private>
+          }
+        />
+        <Route
+          path="events/create"
+          element={
+            <Private path="events/create">
+              <CreateEvent />
+            </Private>
+          }
+        />
+        <Route
+          path="events/:id"
+          element={
+            <Private path="events/:id">
+              <Event />
+            </Private>
+          }
+        />
+        <Route
+          path="events/:id/edit"
+          element={
+            <Private path="events/:id/edit">
+              <EditEvent />
+            </Private>
+          }
+        />
+      </Routes>
+    </AuthContext.Provider>
   );
 }
 
