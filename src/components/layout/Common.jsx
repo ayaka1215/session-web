@@ -1,9 +1,14 @@
 import { Link } from "react-router-dom";
 import { Flex, Text, Box, Heading } from "@chakra-ui/react";
+import React from "react";
+import Header from "../layout/Header.jsx";
 
 const Common = ({ children }) => {
   return (
     <>
+      <header>
+        <Header />
+      </header>
       <Flex minWidth="max-content" alignItems="center" gap="2">
         <Box p="2">
           <Heading size="md">
