@@ -71,7 +71,7 @@ const SignIn = () => {
         setIsSignedIn(true);
         setCurrentUser(res.data.data);
 
-        navigate.push("/");
+        navigate("/");
 
         console.log("Signed in successfully!");
       } else {

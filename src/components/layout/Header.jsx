@@ -44,7 +44,7 @@ const Header = () => {
         Cookies.remove("_uid");
 
         setIsSignedIn(false);
-        navigate.push("/signin");
+        navigate("/signin");
 
         console.log("Succeeded in sign out");
       } else {

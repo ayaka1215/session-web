@@ -35,9 +35,7 @@ const useStyles = makeStyles((theme) => ({
 const SignUp = () => {
   const classes = useStyles();
   const navigate = useNavigate();
-
   const { setIsSignedIn, setCurrentUser } = useContext(AuthContext);
-
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -51,25 +49,19 @@ const SignUp = () => {
       name: name,
       email: email,
       password: password,
-      passwordConfirmation: passwordConfirmation,
+      password_confirmation: passwordConfirmation,
     };
 
     try {
       const res = await signUp(params);
-      console.log(res);
 
       if (res.status === 200) {
-        // アカウント作成と同時にログインさせてしまう
-        // 本来であればメール確認などを挟むべきだが、今回はサンプルなので
         Cookies.set("_access_token", res.headers["access-token"]);
         Cookies.set("_client", res.headers["client"]);
         Cookies.set("_uid", res.headers["uid"]);
-
         setIsSignedIn(true);
         setCurrentUser(res.data.data);
-
-        navigate.push("/");
-
+        navigate("/events");
         console.log("Signed in successfully!");
       } else {
         setAlertMessageOpen(true);
