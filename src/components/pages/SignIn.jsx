@@ -63,16 +63,12 @@ const SignIn = () => {
       console.log(res);
 
       if (res.status === 200) {
-        // ログインに成功した場合はCookieに各値を格納
         Cookies.set("_access_token", res.headers["access-token"]);
         Cookies.set("_client", res.headers["client"]);
         Cookies.set("_uid", res.headers["uid"]);
-
         setIsSignedIn(true);
         setCurrentUser(res.data.data);
-
-        navigate("/");
-
+        navigate("/events");
         console.log("Signed in successfully!");
       } else {
         setAlertMessageOpen(true);
