@@ -67,87 +67,85 @@ function CreateEvent() {
 
   return (
     <Common>
-      <div style={{ margin: "auto", maxWidth: "1000px" }}>
-        <Flex mb="10" mt="5">
-          <Heading as="h1" size="lg" noOfLines={1} ml="2">
-            イベント新規作成
-          </Heading>
-          <Spacer />
-          <Button variant="ghost" colorScheme="teal" mr="5">
-            <Link to="/events">一覧へ戻る</Link>
-          </Button>
-        </Flex>
-        <VStack spacing={6} mx={2}>
-          <FormControl isRequired>
-            <FormLabel>タイトル</FormLabel>
-            <Input
-              type="text"
-              value={title}
-              onChange={(e) => setTitle(e.target.value)}
-              placeholder="イベントタイトルを入力してください。"
-            />
-          </FormControl>
-          <FormControl isRequired>
-            <FormLabel>内容</FormLabel>
-            <Textarea
-              type="text"
-              value={content}
-              onChange={(e) => setContent(e.target.value)}
-              placeholder="イベント内容を入力してください。"
-            />
-          </FormControl>
-          <FormControl isRequired>
-            <FormLabel>開催日</FormLabel>
-            <Input
-              maxWidth="200px"
-              type="date"
-              value={date}
-              onChange={(e) => setDate(e.target.value)}
-            />
-          </FormControl>
-          <FormControl isRequired>
-            <FormLabel>開始時刻</FormLabel>
-            <Input
-              maxWidth="200px"
-              type="time"
-              value={start_time}
-              onChange={(e) => setStartTime(e.target.value)}
-            />
-          </FormControl>
-          <FormControl isRequired>
-            <FormLabel>終了時刻</FormLabel>
-            <Input
-              maxWidth="200px"
-              type="time"
-              value={end_time}
-              onChange={(e) => setEndTime(e.target.value)}
-            />
-          </FormControl>
-          <FormControl isRequired>
-            <FormLabel>開催場所</FormLabel>
-            <Input
-              type="text"
-              value={place}
-              onChange={(e) => setPlace(e.target.value)}
-              placeholder="開催場所を入力してください。"
-            />
-          </FormControl>
-          <FormControl>
-            <FormLabel>画像</FormLabel>
-            <Input
-              type="file"
-              onChange={(e) => setImage(e.target.files[0])}
-              border="none"
-              padding="1"
-            />
-          </FormControl>
-        </VStack>
-        <Center my="10">
-          <Button colorScheme="teal" onClick={onClick} width="300px">
-            作成する
-          </Button>
-        </Center>
-      </div>
+      <Flex mb="10" mt="5">
+        <Heading as="h1" size="lg" noOfLines={1} ml="2">
+          イベント新規作成
+        </Heading>
+        <Spacer />
+        <Button variant="ghost" colorScheme="teal" mr="5">
+          <Link to="/events">一覧へ戻る</Link>
+        </Button>
+      </Flex>
+      <VStack spacing={6} mx={2}>
+        <FormControl isRequired>
+          <FormLabel>タイトル</FormLabel>
+          <Input
+            type="text"
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
+            placeholder="イベントタイトルを入力してください。"
+          />
+        </FormControl>
+        <FormControl isRequired>
+          <FormLabel>内容</FormLabel>
+          <Textarea
+            type="text"
+            value={content}
+            onChange={(e) => setContent(e.target.value)}
+            placeholder="イベント内容を入力してください。"
+          />
+        </FormControl>
+        <FormControl isRequired>
+          <FormLabel>開催日</FormLabel>
+          <Input
+            maxWidth="200px"
+            type="date"
+            value={date}
+            onChange={(e) => setDate(e.target.value)}
+          />
+        </FormControl>
+        <FormControl isRequired>
+          <FormLabel>開始時刻</FormLabel>
+          <Input
+            maxWidth="200px"
+            type="time"
+            value={start_time}
+            onChange={(e) => setStartTime(e.target.value)}
+          />
+        </FormControl>
+        <FormControl isRequired>
+          <FormLabel>終了時刻</FormLabel>
+          <Input
+            maxWidth="200px"
+            type="time"
+            value={end_time}
+            onChange={(e) => setEndTime(e.target.value)}
+          />
+        </FormControl>
+        <FormControl isRequired>
+          <FormLabel>開催場所</FormLabel>
+          <Input
+            type="text"
+            value={place}
+            onChange={(e) => setPlace(e.target.value)}
+            placeholder="開催場所を入力してください。"
+          />
+        </FormControl>
+        <FormControl>
+          <FormLabel>画像</FormLabel>
+          <Input
+            type="file"
+            onChange={(e) => setImage(e.target.files[0])}
+            border="none"
+            padding="1"
+          />
+        </FormControl>
+      </VStack>
+      <Center my="10">
+        <Button colorScheme="teal" onClick={onClick} width="300px">
+          作成する
+        </Button>
+      </Center>
     </Common>
   );
 }

@@ -6,10 +6,10 @@ import { makeStyles } from "@material-ui/core/styles";
 
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
-import Typography from "@material-ui/core/Typography";
-import Button from "@material-ui/core/Button";
 import IconButton from "@material-ui/core/IconButton";
 import MenuIcon from "@material-ui/icons/Menu";
+
+import { Flex, Text, Box, Heading } from "@chakra-ui/react";
 
 import { signOut } from "../../lib/apiClient/auth.js";
 import { AuthContext } from "../../App.js";
@@ -61,33 +61,33 @@ const Header = () => {
     if (!loading) {
       if (isSignedIn) {
         return (
-          <Button
+          <Text
             color="inherit"
             className={classes.linkBtn}
             onClick={handleSignOut}
           >
             Sign out
-          </Button>
+          </Text>
         );
       } else {
         return (
           <>
-            <Button
+            <Text
               component={Link}
               to="/signin"
               color="inherit"
               className={classes.linkBtn}
             >
               Sign in
-            </Button>
-            <Button
+            </Text>
+            <Text
               component={Link}
               to="/signup"
               color="inherit"
               className={classes.linkBtn}
             >
               Sign Up
-            </Button>
+            </Text>
           </>
         );
       }
@@ -98,7 +98,7 @@ const Header = () => {
 
   return (
     <>
-      <AppBar position="static">
+      <AppBar position="static" colorScheme="blue">
         <Toolbar>
           <IconButton
             edge="start"
@@ -107,15 +107,14 @@ const Header = () => {
           >
             <MenuIcon />
           </IconButton>
-          <Typography
-            component={Link}
-            to="/"
-            variant="h6"
-            className={classes.title}
-          >
-            Sample
-          </Typography>
-          <AuthButtons />
+          <Flex minWidth="max-content" alignItems="center" gap="5">
+            <Heading size="md">
+              <Link to="/events">Session App</Link>
+            </Heading>
+            <Text>マイページ</Text>
+            <Text>予約一覧</Text>
+            <AuthButtons />
+          </Flex>
         </Toolbar>
       </AppBar>
     </>
