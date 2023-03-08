@@ -13,6 +13,7 @@ import {
   Stack,
   Text,
   Container,
+  Link,
 } from "@chakra-ui/react";
 
 import { AuthContext } from "../../App.js";
@@ -72,8 +73,8 @@ const SignIn = () => {
               </Heading>
               <HStack spacing="1" justify="center">
                 <Text color="muted">Don't have an account?</Text>
-                <Button variant="link" colorScheme="blue" to="/signup">
-                  Sign Up now!
+                <Button variant="link" colorScheme="blue">
+                  <Link to="/signup">Sign Up now!</Link>
                 </Button>
               </HStack>
             </Stack>
@@ -135,7 +136,6 @@ const SignIn = () => {
           </Box>
         </Stack>
       </Container>
-
       <AlertMessage // エラーが発生した場合はアラートを表示
         open={alertMessageOpen}
         setOpen={setAlertMessageOpen}

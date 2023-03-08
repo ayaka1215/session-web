@@ -2,38 +2,25 @@ import React, { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
 
-import { makeStyles } from "@material-ui/core/styles";
-import TextField from "@material-ui/core/TextField";
-import Card from "@material-ui/core/Card";
-import CardContent from "@material-ui/core/CardContent";
-import CardHeader from "@material-ui/core/CardHeader";
-import Button from "@material-ui/core/Button";
+import {
+  Box,
+  Button,
+  FormControl,
+  FormLabel,
+  Heading,
+  HStack,
+  Input,
+  Stack,
+  Text,
+  Container,
+  Link,
+} from "@chakra-ui/react";
 
 import { AuthContext } from "../../App.js";
 import AlertMessage from "../utils/AlertMessage.jsx";
 import { signUp } from "../../lib/apiClient/auth.js";
 
-const useStyles = makeStyles((theme) => ({
-  container: {
-    marginTop: theme.spacing(6),
-  },
-  submitBtn: {
-    marginTop: theme.spacing(2),
-    flexGrow: 1,
-    textTransform: "none",
-  },
-  header: {
-    textAlign: "center",
-  },
-  card: {
-    padding: theme.spacing(2),
-    maxWidth: 400,
-  },
-}));
-
-// サインアップ用ページ
 const SignUp = () => {
-  const classes = useStyles();
   const navigate = useNavigate();
   const { setIsSignedIn, setCurrentUser } = useContext(AuthContext);
   const [name, setName] = useState("");
@@ -74,69 +61,96 @@ const SignUp = () => {
 
   return (
     <>
-      <form noValidate autoComplete="off">
-        <Card className={classes.card}>
-          <CardHeader className={classes.header} title="Sign Up" />
-          <CardContent>
-            <TextField
-              variant="outlined"
-              required
-              fullWidth
-              label="Name"
-              value={name}
-              margin="dense"
-              onChange={(event) => setName(event.target.value)}
-            />
-            <TextField
-              variant="outlined"
-              required
-              fullWidth
-              label="Email"
-              value={email}
-              margin="dense"
-              onChange={(event) => setEmail(event.target.value)}
-            />
-            <TextField
-              variant="outlined"
-              required
-              fullWidth
-              label="Password"
-              type="password"
-              value={password}
-              margin="dense"
-              autoComplete="current-password"
-              onChange={(event) => setPassword(event.target.value)}
-            />
-            <TextField
-              variant="outlined"
-              required
-              fullWidth
-              label="Password Confirmation"
-              type="password"
-              value={passwordConfirmation}
-              margin="dense"
-              autoComplete="current-password"
-              onChange={(event) => setPasswordConfirmation(event.target.value)}
-            />
-            <Button
-              type="submit"
-              variant="contained"
-              size="large"
-              fullWidth
-              color="default"
-              disabled={
-                !name || !email || !password || !passwordConfirmation
-                  ? true
-                  : false
-              }
-              className={classes.submitBtn}
-              onClick={handleSubmit}
-            >
-              Submit
-            </Button>
-          </CardContent>
-        </Card>
-      </form>
+      <Container
+        maxW="lg"
+        py={{ base: "12", md: "24" }}
+        px={{ base: "0", sm: "8" }}
+      >
+        <Stack spacing="8">
+          <Stack spacing="6">
+            <Stack spacing={{ base: "2", md: "3" }} textAlign="center">
+              <Heading size="lx" as="h2">
+                Sign Up
+              </Heading>
+              <HStack spacing="1" justify="center">
+                <Text color="muted">Already have an account?</Text>
+                <Button variant="link" colorScheme="blue">
+                  <Link to="/signin">Sign In</Link>
+                </Button>
+              </HStack>
+            </Stack>
+          </Stack>
+          <Stack spacing="5">
+            <FormControl>
+              <FormLabel htmlFor="name">Name</FormLabel>
+              <Input
+                border="1px"
+                id="name"
+                type="name"
+                required
+                value={name}
+                margin="dense"
+                onChange={(event) => setName(event.target.value)}
+              />
+            </FormControl>
+            <FormControl>
+              <FormLabel htmlFor="email">Email</FormLabel>
+              <Input
+                border="1px"
+                id="email"
+                type="email"
+                variant="outlined"
+                required
+                value={email}
+                margin="dense"
+                onChange={(event) => setEmail(event.target.value)}
+              />
+            </FormControl>
+
+            <FormControl>
+              <FormLabel htmlFor="name">Password</FormLabel>
+              <Input
+                border="1px"
+                variant="outlined"
+                required
+                type="password"
+                value={password}
+                margin="dense"
+                autoComplete="current-password"
+                onChange={(event) => setPassword(event.target.value)}
+              />
+            </FormControl>
+            <FormControl>
+              <FormLabel htmlFor="name">Password Confirmation</FormLabel>
+              <Input
+                border="1px"
+                variant="outlined"
+                required
+                type="password"
+                value={passwordConfirmation}
+                margin="dense"
+                autoComplete="current-password"
+                onChange={(event) =>
+                  setPasswordConfirmation(event.target.value)
+                }
+              />
+            </FormControl>
+            <Stack spacing="6">
+              <Button
+                type="submit"
+                size="large"
+                colorScheme="teal"
+                fullWidth
+                onClick={handleSubmit}
+                mt="5"
+                py="3"
+              >
+                Sign up
+              </Button>
+            </Stack>
+          </Stack>
+        </Stack>
+      </Container>
       <AlertMessage // エラーが発生した場合はアラートを表示
         open={alertMessageOpen}
         setOpen={setAlertMessageOpen}
