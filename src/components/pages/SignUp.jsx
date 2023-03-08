@@ -74,9 +74,7 @@ const SignUp = () => {
               </Heading>
               <HStack spacing="1" justify="center">
                 <Text color="muted">Already have an account?</Text>
-                <Button variant="link" colorScheme="blue">
-                  <Link to="/signin">Sign In</Link>
-                </Button>
+                <a href="/signin">Sign In now!</a>
               </HStack>
             </Stack>
           </Stack>
