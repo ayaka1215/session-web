@@ -14,6 +14,7 @@ import {
   Text,
   Container,
   Link,
+  Checkbox,
 } from "@chakra-ui/react";
 
 import { AuthContext } from "../../App.js";
@@ -116,6 +117,7 @@ const SignIn = () => {
                     onChange={(event) => setPassword(event.target.value)}
                   />
                 </FormControl>
+                <Checkbox defaultChecked>Remember me</Checkbox>
                 <Stack spacing="6">
                   <Button
                     type="submit"
@@ -134,7 +136,7 @@ const SignIn = () => {
           </Box>
         </Stack>
       </Container>
-      <AlertMessage // エラーが発生した場合はアラートを表示
+      <AlertMessage
         open={alertMessageOpen}
         setOpen={setAlertMessageOpen}
         severity="error"

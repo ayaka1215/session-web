@@ -56,8 +56,6 @@ const Header = () => {
   };
 
   const AuthButtons = () => {
-    // 認証完了後はサインアウト用のボタンを表示
-    // 未認証時は認証用のボタンを表示
     if (!loading) {
       if (isSignedIn) {
         return (
@@ -113,6 +111,9 @@ const Header = () => {
             </Heading>
             <Text>マイページ</Text>
             <Text>予約一覧</Text>
+            <Text>
+              <Link to="/users">メンバー一覧</Link>
+            </Text>
             <AuthButtons />
           </Flex>
         </Toolbar>
