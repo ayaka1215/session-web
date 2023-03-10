@@ -9,6 +9,7 @@ import {
   Td,
   TableContainer,
   Heading,
+  Button,
 } from "@chakra-ui/react";
 import Common from "../components/layout/Common.jsx";
 
@@ -37,7 +38,10 @@ function Users() {
                   <Tr>
                     <Th>ID</Th>
                     <Th>名前</Th>
-                    <Th>Email</Th>
+                    <Th>パート</Th>
+                    <Th>区分</Th>
+                    <Th></Th>
+                    <Th></Th>
                   </Tr>
                 </Thead>
                 <Tbody>
@@ -46,7 +50,14 @@ function Users() {
                       <Tr>
                         <Td>{e.id}</Td>
                         <Td>{e.name}</Td>
-                        <Td>{e.email}</Td>
+                        <Td>Guitar</Td>
+                        <Td>メンバー</Td>
+                        <Td>
+                          <Button>詳細</Button>
+                        </Td>
+                        <Td>
+                          <Button>削除</Button>
+                        </Td>
                       </Tr>
                     );
                   })}

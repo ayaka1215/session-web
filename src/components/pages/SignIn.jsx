@@ -117,13 +117,11 @@ const SignIn = () => {
                     onChange={(event) => setPassword(event.target.value)}
                   />
                 </FormControl>
-                <Checkbox defaultChecked>Remember me</Checkbox>
                 <Stack spacing="6">
                   <Button
                     type="submit"
                     size="large"
                     colorScheme="teal"
-                    fullWidth
                     onClick={handleSubmit}
                     mt="5"
                     py="3"
