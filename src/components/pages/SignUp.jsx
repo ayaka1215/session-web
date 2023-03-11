@@ -138,7 +138,6 @@ const SignUp = () => {
                 type="submit"
                 size="large"
                 colorScheme="teal"
-                fullWidth
                 onClick={handleSubmit}
                 mt="5"
                 py="3"

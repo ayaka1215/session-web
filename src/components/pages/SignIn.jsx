@@ -14,6 +14,7 @@ import {
   Text,
   Container,
   Link,
+  Checkbox,
 } from "@chakra-ui/react";
 
 import { AuthContext } from "../../App.js";
@@ -121,7 +122,6 @@ const SignIn = () => {
                     type="submit"
                     size="large"
                     colorScheme="teal"
-                    fullWidth
                     onClick={handleSubmit}
                     mt="5"
                     py="3"
@@ -134,7 +134,7 @@ const SignIn = () => {
           </Box>
         </Stack>
       </Container>
-      <AlertMessage // エラーが発生した場合はアラートを表示
+      <AlertMessage
         open={alertMessageOpen}
         setOpen={setAlertMessageOpen}
         severity="error"
