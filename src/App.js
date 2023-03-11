@@ -4,6 +4,7 @@ import Events from "./routes/events.jsx";
 import CreateEvent from "./routes/createEvent.jsx";
 import Event from "./routes/event.jsx";
 import EditEvent from "./routes/editEvent.jsx";
+import Users from "./routes/users.jsx";
 
 import SignUp from "./components/pages/SignUp.jsx";
 import SignIn from "./components/pages/SignIn.jsx";
@@ -103,6 +104,14 @@ function App() {
           element={
             <Private path="events/:id/edit">
               <EditEvent />
+            </Private>
+          }
+        />
+        <Route
+          path="users"
+          element={
+            <Private path="users">
+              <Users />
             </Private>
           }
         />
