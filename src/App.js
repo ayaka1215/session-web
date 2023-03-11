@@ -28,8 +28,8 @@ function App() {
   const handleGetCurrentUser = async () => {
     try {
       const res = await getCurrentUser();
-
-      if (res?.data.isLogin === true) {
+      console.log(res);
+      if (res?.data.is_login === true) {
         setIsSignedIn(true);
         setCurrentUser(res?.data.data);
 
@@ -46,7 +46,7 @@ function App() {
 
   useEffect(() => {
     handleGetCurrentUser();
-  }, [setCurrentUser]);
+  }, []);
   const Private = ({ children }) => {
     if (!loading) {
       if (isSignedIn) {
