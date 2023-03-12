@@ -102,7 +102,6 @@ function EditUser() {
           )}
           <FormControl>
             <FormLabel>プロフィール画像</FormLabel>
-            {console.log(image == "")}
             <Input
               type="file"
               onChange={(e) => setImage(e.target.files[0])}
