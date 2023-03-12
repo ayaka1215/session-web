@@ -36,6 +36,7 @@ function EditUser() {
       setUser(res.data);
       setName(res.data.name);
       setEmail(res.data.email);
+      setImage(res.data.image);
     };
     f();
   }, []);
@@ -55,7 +56,6 @@ function EditUser() {
       const data = createFormData();
       const resUser = await getCurrentUser();
       const currentUserId = resUser.data.data.id;
-      console.log(currentUserId);
       await updateUser(currentUserId, data);
 
       navigate("/mypage", { replace: true });
@@ -102,6 +102,7 @@ function EditUser() {
           )}
           <FormControl>
             <FormLabel>プロフィール画像</FormLabel>
+            {console.log(image == "")}
             <Input
               type="file"
               onChange={(e) => setImage(e.target.files[0])}
@@ -113,6 +114,7 @@ function EditUser() {
             <FormLabel>名前</FormLabel>
             <Input
               type="text"
+              disabled
               value={name}
               onChange={(e) => setName(e.target.value)}
               placeholder="名前を入力してください"
