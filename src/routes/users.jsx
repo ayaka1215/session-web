@@ -1,5 +1,5 @@
 import { useState, useEffect, React } from "react";
-import { getUserAll } from "../lib/apiClient/user.js";
+import { getUserAll, deleteUser } from "../lib/apiClient/user.js";
 import {
   Table,
   Thead,
@@ -10,11 +10,13 @@ import {
   TableContainer,
   Heading,
   Button,
+  useToast,
 } from "@chakra-ui/react";
 import Common from "../components/layout/Common.jsx";
 
 function Users() {
   const [users, setUsers] = useState();
+  const toast = useToast();
 
   useEffect(() => {
     const f = async () => {
@@ -23,6 +25,31 @@ function Users() {
     };
     f();
   }, []);
+
+  const destroyUser = async (id) => {
+    const isOk = window.confirm("ユーザーを削除します。よろしいですか？");
+    if (isOk) {
+      try {
+        await deleteUser(id);
+        setUsers(users.filter((users) => users.id !== id));
+        toast({
+          title: "ユーザーを削除しました。",
+          description: "",
+          status: "success",
+          duration: 9000,
+          isClosable: true,
+        });
+      } catch (e) {
+        console.log(e);
+        toast({
+          title: "エラーが発生しました。",
+          status: "error",
+          duration: 9000,
+          isClosable: true,
+        });
+      }
+    }
+  };
 
   return (
     <>
@@ -40,6 +67,7 @@ function Users() {
                     <Th>名前</Th>
                     <Th>パート</Th>
                     <Th>区分</Th>
+                    <Th>許可</Th>
                     <Th></Th>
                     <Th></Th>
                   </Tr>
@@ -51,12 +79,15 @@ function Users() {
                         <Td>{e.id}</Td>
                         <Td>{e.name}</Td>
                         <Td>Guitar</Td>
-                        <Td>メンバー</Td>
+                        <Td>{e.is_admin ? "管理" : "メンバー"}</Td>
+                        <Td>{e.is_permitted ? "済" : <Button>許可</Button>}</Td>
                         <Td>
                           <Button>詳細</Button>
                         </Td>
                         <Td>
-                          <Button>削除</Button>
+                          <Button onClick={() => destroyUser(e.id)}>
+                            削除
+                          </Button>
                         </Td>
                       </Tr>
                     );

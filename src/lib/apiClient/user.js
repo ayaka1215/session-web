@@ -15,3 +15,7 @@ export const updateUser = (id, data) => {
 export const getPartAll = () => {
   return axiosInstance.get("/parts");
 };
+
+export const deleteUser = (id) => {
+  return axiosInstance.delete(`users/${id}`);
+};
