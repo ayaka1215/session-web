@@ -6,6 +6,7 @@ import Event from "./routes/event.jsx";
 import EditEvent from "./routes/editEvent.jsx";
 import Users from "./routes/users.jsx";
 import EditUser from "./routes/editUser.jsx";
+import User from "./routes/user.jsx";
 
 import SignUp from "./components/pages/SignUp.jsx";
 import SignIn from "./components/pages/SignIn.jsx";
@@ -119,6 +120,14 @@ function App() {
           element={
             <Private path="mypage">
               <EditUser />
+            </Private>
+          }
+        />
+        <Route
+          path="users/:id"
+          element={
+            <Private path="users/:id">
+              <User />
             </Private>
           }
         />

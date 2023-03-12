@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { useState, useEffect, React } from "react";
 import { getUserAll, deleteUser } from "../lib/apiClient/user.js";
 import {
@@ -82,7 +83,9 @@ function Users() {
                         <Td>{e.is_admin ? "管理" : "メンバー"}</Td>
                         <Td>{e.is_permitted ? "済" : <Button>許可</Button>}</Td>
                         <Td>
-                          <Button>詳細</Button>
+                          <Link to={`/users/${e.id}`} key={e.id}>
+                            <Button>詳細</Button>
+                          </Link>
                         </Td>
                         <Td>
                           <Button onClick={() => destroyUser(e.id)}>
