@@ -1,17 +1,14 @@
 import { axiosInstance } from "../../utils/axios.js";
 import Cookies from "js-cookie";
 
-// サインアップ（新規アカウント作成）
 export const signUp = (params) => {
   return axiosInstance.post("auth", params);
 };
 
-// サインイン（ログイン）
 export const signIn = (params) => {
   return axiosInstance.post("auth/sign_in", params);
 };
 
-// サインアウト（ログアウト）
 export const signOut = () => {
   return axiosInstance.delete("auth/sign_out", {
     headers: {
@@ -22,7 +19,6 @@ export const signOut = () => {
   });
 };
 
-// 認証済みのユーザーを取得
 export const getCurrentUser = () => {
   if (
     !Cookies.get("_access_token") ||

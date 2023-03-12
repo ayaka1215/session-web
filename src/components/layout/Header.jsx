@@ -64,7 +64,7 @@ const Header = () => {
             className={classes.linkBtn}
             onClick={handleSignOut}
           >
-            Sign out
+            ログアウト
           </Text>
         );
       } else {
@@ -109,7 +109,9 @@ const Header = () => {
             <Heading size="md">
               <Link to="/events">Session App</Link>
             </Heading>
-            <Text>マイページ</Text>
+            <Text>
+              <Link to="/mypage">マイページ</Link>
+            </Text>
             <Text>予約一覧</Text>
             <Text>
               <Link to="/users">メンバー一覧</Link>

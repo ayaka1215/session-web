@@ -5,6 +5,7 @@ import CreateEvent from "./routes/createEvent.jsx";
 import Event from "./routes/event.jsx";
 import EditEvent from "./routes/editEvent.jsx";
 import Users from "./routes/users.jsx";
+import EditUser from "./routes/editUser.jsx";
 
 import SignUp from "./components/pages/SignUp.jsx";
 import SignIn from "./components/pages/SignIn.jsx";
@@ -29,12 +30,10 @@ function App() {
   const handleGetCurrentUser = async () => {
     try {
       const res = await getCurrentUser();
-
-      if (res?.data.isLogin === true) {
+      if (res?.data.is_login === true) {
         setIsSignedIn(true);
         setCurrentUser(res?.data.data);
-
-        console.log(res?.data.data);
+        navigate("/events");
       } else {
         console.log("No current user");
       }
@@ -47,7 +46,7 @@ function App() {
 
   useEffect(() => {
     handleGetCurrentUser();
-  }, [setCurrentUser]);
+  }, []);
   const Private = ({ children }) => {
     if (!loading) {
       if (isSignedIn) {
@@ -112,6 +111,14 @@ function App() {
           element={
             <Private path="users">
               <Users />
+            </Private>
+          }
+        />
+        <Route
+          path="mypage"
+          element={
+            <Private path="mypage">
+              <EditUser />
             </Private>
           }
         />
