@@ -1,5 +1,5 @@
 import { useState, useEffect, React } from "react";
-import { getUserAll } from "../lib/apiClient/user.js";
+import { getUserAll, deleteUser } from "../lib/apiClient/user.js";
 import {
   Table,
   Thead,
@@ -10,11 +10,13 @@ import {
   TableContainer,
   Heading,
   Button,
+  useToast,
 } from "@chakra-ui/react";
 import Common from "../components/layout/Common.jsx";
 
 function Users() {
   const [users, setUsers] = useState();
+  const toast = useToast();
 
   useEffect(() => {
     const f = async () => {
@@ -23,6 +25,31 @@ function Users() {
     };
     f();
   }, []);
+
+  const destroyUser = async (id) => {
+    const isOk = window.confirm("ユーザーを削除します。よろしいですか？");
+    if (isOk) {
+      try {
+        await deleteUser(id);
+        setUsers(users.filter((users) => users.id !== id));
+        toast({
+          title: "ユーザーを削除しました。",
+          description: "",
+          status: "success",
+          duration: 9000,
+          isClosable: true,
+        });
+      } catch (e) {
+        console.log(e);
+        toast({
+          title: "エラーが発生しました。",
+          status: "error",
+          duration: 9000,
+          isClosable: true,
+        });
+      }
+    }
+  };
 
   return (
     <>
@@ -56,7 +83,9 @@ function Users() {
                           <Button>詳細</Button>
                         </Td>
                         <Td>
-                          <Button>削除</Button>
+                          <Button onClick={() => destroyUser(e.id)}>
+                            削除
+                          </Button>
                         </Td>
                       </Tr>
                     );
