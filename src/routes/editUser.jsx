@@ -15,6 +15,7 @@ import {
   Spacer,
   Flex,
   Center,
+  Image,
 } from "@chakra-ui/react";
 import Common from "../components/layout/Common.jsx";
 
@@ -84,6 +85,21 @@ function EditUser() {
       </Heading>
       {user && (
         <VStack spacing={6} mx={2}>
+          {image?.url ? (
+            <Image
+              src={image.url}
+              alt="image"
+              borderRadius="lg"
+              width="300px"
+            />
+          ) : (
+            <Image
+              src={`${process.env.PUBLIC_URL}/user_no_image.png`}
+              alt="no image"
+              borderRadius="lg"
+              width="300px"
+            />
+          )}
           <FormControl>
             <FormLabel>プロフィール画像</FormLabel>
             <Input
@@ -102,7 +118,6 @@ function EditUser() {
               placeholder="名前を入力してください"
             />
           </FormControl>
-
           <FormControl isRequired>
             <FormLabel>メールアドレス</FormLabel>
             <Input
@@ -112,15 +127,6 @@ function EditUser() {
               placeholder="メールアドレスを入力してください"
             />
           </FormControl>
-          {/* <FormControl>
-            <FormLabel>画像</FormLabel>
-            <Input
-              type="file"
-              onChange={(e) => setImage(e.target.files[0])}
-              border="none"
-              padding="1"
-            />
-          </FormControl> */}
         </VStack>
       )}
       <Center my="10">
