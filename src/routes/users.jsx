@@ -1,6 +1,6 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useState, useEffect, React } from "react";
-import { getUserAll, deleteUser } from "../lib/apiClient/user.js";
+import { getUserAll, deleteUser, permitUser } from "../lib/apiClient/user.js";
 import {
   Table,
   Thead,
@@ -18,6 +18,7 @@ import Common from "../components/layout/Common.jsx";
 function Users() {
   const [users, setUsers] = useState();
   const toast = useToast();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const f = async () => {
@@ -35,6 +36,31 @@ function Users() {
         setUsers(users.filter((users) => users.id !== id));
         toast({
           title: "ユーザーを削除しました。",
+          description: "",
+          status: "success",
+          duration: 9000,
+          isClosable: true,
+        });
+      } catch (e) {
+        console.log(e);
+        toast({
+          title: "エラーが発生しました。",
+          status: "error",
+          duration: 9000,
+          isClosable: true,
+        });
+      }
+    }
+  };
+
+  const clickPermitUser = async (id) => {
+    const isOk = window.confirm("ユーザーを許可します。よろしいですか？");
+    if (isOk) {
+      try {
+        await permitUser(id);
+        navigate("/users", { replace: true });
+        toast({
+          title: "ユーザーを許可しました。",
           description: "",
           status: "success",
           duration: 9000,
@@ -81,7 +107,15 @@ function Users() {
                         <Td>{e.name}</Td>
                         <Td>Guitar</Td>
                         <Td>{e.is_admin ? "管理" : "メンバー"}</Td>
-                        <Td>{e.is_permitted ? "済" : <Button>許可</Button>}</Td>
+                        <Td>
+                          {e.is_permitted ? (
+                            "済"
+                          ) : (
+                            <Button onClick={() => clickPermitUser(e.id)}>
+                              許可
+                            </Button>
+                          )}
+                        </Td>
                         <Td>
                           <Link to={`/users/${e.id}`} key={e.id}>
                             <Button>詳細</Button>

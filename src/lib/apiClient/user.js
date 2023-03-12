@@ -12,6 +12,10 @@ export const updateUser = (id, data) => {
   return axiosInstance.put(`users/${id}`, data);
 };
 
+export const permitUser = (id) => {
+  return axiosInstance.put(`users/${id}`);
+};
+
 export const getPartAll = () => {
   return axiosInstance.get("/parts");
 };
