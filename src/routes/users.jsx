@@ -67,6 +67,7 @@ function Users() {
                     <Th>名前</Th>
                     <Th>パート</Th>
                     <Th>区分</Th>
+                    <Th>許可</Th>
                     <Th></Th>
                     <Th></Th>
                   </Tr>
@@ -78,7 +79,8 @@ function Users() {
                         <Td>{e.id}</Td>
                         <Td>{e.name}</Td>
                         <Td>Guitar</Td>
-                        <Td>メンバー</Td>
+                        <Td>{e.is_admin ? "管理" : "メンバー"}</Td>
+                        <Td>{e.is_permitted ? "済" : <Button>許可</Button>}</Td>
                         <Td>
                           <Button>詳細</Button>
                         </Td>
