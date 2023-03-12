@@ -11,3 +11,7 @@ export const getUserDetail = (id) => {
 export const updateUser = (id, data) => {
   return axiosInstance.put(`users/${id}`, data);
 };
+
+export const getPartAll = () => {
+  return axiosInstance.get("/parts");
+};

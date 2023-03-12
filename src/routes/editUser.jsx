@@ -1,7 +1,11 @@
 import { Link, useParams, useNavigate } from "react-router-dom";
 import { useState, useEffect, React } from "react";
 import { axiosInstance } from "../utils/axios.js";
-import { getUserDetail, updateUser } from "../lib/apiClient/user.js";
+import {
+  getUserDetail,
+  updateUser,
+  getPartAll,
+} from "../lib/apiClient/user.js";
 import { getCurrentUser } from "../lib/apiClient/auth.js";
 import {
   Heading,
@@ -16,6 +20,9 @@ import {
   Flex,
   Center,
   Image,
+  Checkbox,
+  CheckboxGroup,
+  Stack,
 } from "@chakra-ui/react";
 import Common from "../components/layout/Common.jsx";
 
@@ -24,6 +31,7 @@ function EditUser() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [image, setImage] = useState("");
+  const [parts, setParts] = useState([]);
   const navigate = useNavigate();
   const toast = useToast();
   const params = useParams();
@@ -32,11 +40,15 @@ function EditUser() {
     const f = async () => {
       const resUser = await getCurrentUser();
       const currentUserId = resUser.data.data.id;
+
       const res = await getUserDetail(currentUserId);
       setUser(res.data);
       setName(res.data.name);
       setEmail(res.data.email);
       setImage(res.data.image);
+
+      const resPart = await getPartAll();
+      setParts(resPart.data);
     };
     f();
   }, []);
@@ -100,7 +112,7 @@ function EditUser() {
               width="300px"
             />
           )}
-          <FormControl>
+          <FormControl maxWidth="300px">
             <FormLabel>プロフィール画像</FormLabel>
             <Input
               type="file"
@@ -109,17 +121,32 @@ function EditUser() {
               padding="1"
             />
           </FormControl>
-          <FormControl isRequired>
+          <FormControl isRequired maxWidth="300px">
             <FormLabel>名前</FormLabel>
             <Input
               type="text"
-              disabled
               value={name}
               onChange={(e) => setName(e.target.value)}
               placeholder="名前を入力してください"
             />
           </FormControl>
-          <FormControl isRequired>
+          <FormControl>
+            <CheckboxGroup colorScheme="green">
+              <Stack spacing={[1, 5]} direction={["column", "row"]}>
+                {parts.map((part) => {
+                  return (
+                    <Checkbox
+                      value={part.id}
+                      onchange={(e) => setParts(e.target.value)}
+                    >
+                      {part.name}
+                    </Checkbox>
+                  );
+                })}
+              </Stack>
+            </CheckboxGroup>
+          </FormControl>
+          <FormControl isRequired maxWidth="300px">
             <FormLabel>メールアドレス</FormLabel>
             <Input
               type="text"
