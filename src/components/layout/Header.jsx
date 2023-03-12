@@ -64,7 +64,7 @@ const Header = () => {
             className={classes.linkBtn}
             onClick={handleSignOut}
           >
-            Sign out
+            ログアウト
           </Text>
         );
       } else {
