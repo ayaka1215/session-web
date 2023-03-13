@@ -1,8 +1,6 @@
 import React, { useContext, useState, useEffect } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import Cookies from "js-cookie";
-import { getCurrentUser } from "../../lib/apiClient/auth.js";
-import { getUserDetail } from "../../lib/apiClient/user.js";
 
 import {
   Flex,
@@ -21,22 +19,9 @@ import { signOut } from "../../lib/apiClient/auth.js";
 import { AuthContext } from "../../App.js";
 
 const Header = () => {
-  const [user, setUser] = useState("");
-  const [image, setImage] = useState("");
+  const { currentUser, setCurrentUser } = useContext(AuthContext);
   const { loading, isSignedIn, setIsSignedIn } = useContext(AuthContext);
   const navigate = useNavigate();
-
-  useEffect(() => {
-    const f = async () => {
-      const resUser = await getCurrentUser();
-      const currentUserId = resUser.data.data.id;
-
-      const res = await getUserDetail(currentUserId);
-      setUser(res.data);
-      setImage(res.data.image);
-    };
-    f();
-  });
 
   const handleSignOut = async (e) => {
     try {
@@ -93,11 +78,11 @@ const Header = () => {
           </Heading>
           <Menu>
             <MenuButton as={Button}>
-              {user && (
+              {currentUser && (
                 <Flex gap="2">
-                  {image?.url ? (
+                  {currentUser.image?.url ? (
                     <Image
-                      src={image.url}
+                      src={currentUser.image.url}
                       alt="image"
                       borderRadius="lg"
                       width="30px"
@@ -110,7 +95,7 @@ const Header = () => {
                       width="20px"
                     />
                   )}
-                  <Text>{user.name}</Text>
+                  <Text>{currentUser.name}</Text>
                 </Flex>
               )}
             </MenuButton>
@@ -124,20 +109,13 @@ const Header = () => {
               </MenuItem>
             </MenuList>
           </Menu>
-          <Text>
-            <Link to="/users">メンバー一覧</Link>
-          </Text>
+          {currentUser.is_admin && (
+            <Text>
+              <Link to="/users">メンバー一覧</Link>
+            </Text>
+          )}
         </Flex>
       </Box>
-      {/* <AppBar position="static" colorScheme="blue">
-        <Toolbar>
-          <IconButton
-            edge="start"
-            className={classes.iconButton}
-            color="inherit"
-          ></IconButton>
-        </Toolbar>
-      </AppBar> */}
     </>
   );
 };

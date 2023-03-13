@@ -1,6 +1,8 @@
 import { Link } from "react-router-dom";
+import { useContext } from "react";
 import { useState, useEffect, React } from "react";
 import { getEventAll, deleteEvent } from "../lib/apiClient/event.js";
+import { AuthContext } from "../App.js";
 import {
   Card,
   Heading,
@@ -21,6 +23,7 @@ import { format } from "date-fns";
 import ja from "date-fns/locale/ja";
 
 function Events() {
+  const { currentUser, setCurrentUser } = useContext(AuthContext);
   const [events, setEvents] = useState();
   const toast = useToast();
 

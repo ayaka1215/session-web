@@ -5,7 +5,6 @@ import {
   deleteUser,
   getPartAll,
 } from "../lib/apiClient/user.js";
-import { getCurrentUser } from "../lib/apiClient/auth.js";
 import {
   Box,
   Heading,

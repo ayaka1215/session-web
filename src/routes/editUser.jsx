@@ -1,23 +1,15 @@
-import { Link, useParams, useNavigate } from "react-router-dom";
-import { useState, useEffect, React, useRef } from "react";
-import { axiosInstance } from "../utils/axios.js";
-import {
-  getUserDetail,
-  updateUser,
-  getPartAll,
-} from "../lib/apiClient/user.js";
-import { getCurrentUser } from "../lib/apiClient/auth.js";
+import { useNavigate } from "react-router-dom";
+import { useState, useEffect, React, useRef, useContext } from "react";
+import { updateUser, getPartAll } from "../lib/apiClient/user.js";
+import { AuthContext } from "../App.js";
 import {
   Heading,
   FormControl,
   FormLabel,
   Input,
-  Textarea,
   Button,
   VStack,
   useToast,
-  Spacer,
-  Flex,
   Center,
   Image,
   Checkbox,
@@ -27,6 +19,7 @@ import {
 import Common from "../components/layout/Common.jsx";
 
 function EditUser() {
+  const { currentUser, setCurrentUser } = useContext(AuthContext);
   const circleRef = useRef(null);
   const [user, setUser] = useState("");
   const [name, setName] = useState("");
@@ -36,7 +29,6 @@ function EditUser() {
   const [part_ids, setPartIds] = useState([]);
   const navigate = useNavigate();
   const toast = useToast();
-  const params = useParams();
 
   useEffect(() => {
     circleRef.current?.addEventListener("handleChange", handleChange, {
@@ -44,14 +36,10 @@ function EditUser() {
     });
 
     const f = async () => {
-      const resUser = await getCurrentUser();
-      const currentUserId = resUser.data.data.id;
-
-      const res = await getUserDetail(currentUserId);
-      setUser(res.data);
-      setName(res.data.name);
-      setEmail(res.data.email);
-      setImage(res.data.image);
+      setUser(currentUser);
+      setName(currentUser.name);
+      setEmail(currentUser.email);
+      setImage(currentUser.image);
 
       const resPart = await getPartAll();
       setParts(resPart.data);
@@ -88,9 +76,7 @@ function EditUser() {
   const onClick = async () => {
     try {
       const data = createFormData();
-      const resUser = await getCurrentUser();
-      const currentUserId = resUser.data.data.id;
-      await updateUser(currentUserId, data);
+      await updateUser(currentUser.id, data);
 
       navigate("/mypage", { replace: true });
       toast({
