@@ -1,5 +1,5 @@
 import { Link, useParams, useNavigate } from "react-router-dom";
-import { useState, useEffect, React } from "react";
+import { useState, useEffect, React, useRef } from "react";
 import { axiosInstance } from "../utils/axios.js";
 import {
   getUserDetail,
@@ -27,16 +27,22 @@ import {
 import Common from "../components/layout/Common.jsx";
 
 function EditUser() {
+  const circleRef = useRef(null);
   const [user, setUser] = useState("");
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [image, setImage] = useState("");
   const [parts, setParts] = useState([]);
+  const [part_ids, setPartIds] = useState([]);
   const navigate = useNavigate();
   const toast = useToast();
   const params = useParams();
 
   useEffect(() => {
+    circleRef.current?.addEventListener("handleChange", handleChange, {
+      passive: false,
+    });
+
     const f = async () => {
       const resUser = await getCurrentUser();
       const currentUserId = resUser.data.data.id;
@@ -51,7 +57,23 @@ function EditUser() {
       setParts(resPart.data);
     };
     f();
+
+    return () => {
+      circleRef.current?.removeEventListener("handleChange", handleChange);
+    };
   }, []);
+
+  const handleChange = (e) => {
+    const copyPartIds = [...part_ids];
+    copyPartIds.map((partId) => {
+      if (partId.id == e.target.value) {
+        copyPartIds = copyPartIds.filter((partId) => partId !== e.target.value);
+      } else {
+        copyPartIds.push(e.target.value);
+      }
+    });
+    setPartIds(copyPartIds);
+  };
 
   const createFormData = () => {
     const formData = new FormData();
@@ -133,14 +155,18 @@ function EditUser() {
           <FormControl>
             <CheckboxGroup colorScheme="green">
               <Stack spacing={[1, 5]} direction={["column", "row"]}>
-                {parts.map((part) => {
+                {parts.map((part, index) => {
                   return (
-                    <Checkbox
-                      value={part.id}
-                      onchange={(e) => setParts(e.target.value)}
-                    >
-                      {part.name}
-                    </Checkbox>
+                    <FormControl touchAction="none">
+                      <Checkbox
+                        id={part.name}
+                        name={part.name}
+                        value={part.id}
+                        onChange={handleChange}
+                      >
+                        <FormLabel touchAction="none">{part.name}</FormLabel>
+                      </Checkbox>
+                    </FormControl>
                   );
                 })}
               </Stack>
