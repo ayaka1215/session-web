@@ -72,7 +72,7 @@ const Header = () => {
   return (
     <>
       <Box as="nav" p="5" borderBottom="1px" borderColor="gray.200">
-        <Flex minWidth="max-content" alignItems="center" gap="5">
+        <Flex minWidth="max-content" alignItems="center" gap="3">
           <Heading size="md">
             <Link to="/events">Session App</Link>
           </Heading>
@@ -110,9 +110,19 @@ const Header = () => {
             </MenuList>
           </Menu>
           {currentUser.is_admin && (
-            <Text>
-              <Link to="/users">メンバー一覧</Link>
-            </Text>
+            <Menu>
+              <MenuButton as={Button} fontSize={{ base: "md", sm: "sm" }}>
+                管理
+              </MenuButton>
+              <MenuList>
+                <MenuItem>
+                  <Link to="/users">メンバー一覧</Link>
+                </MenuItem>
+                <MenuItem>
+                  <Link to="/events/create">イベント新規作成</Link>
+                </MenuItem>
+              </MenuList>
+            </Menu>
           )}
         </Flex>
       </Box>
