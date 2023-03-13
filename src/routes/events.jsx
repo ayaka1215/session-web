@@ -68,9 +68,11 @@ function Events() {
             イベント一覧
           </Heading>
           <Spacer />
-          <Button colorScheme="teal" mr="5">
-            <Link to="/events/create">新規作成</Link>
-          </Button>
+          {currentUser.is_admin && (
+            <Button colorScheme="teal" mr="5">
+              <Link to="/events/create">新規作成</Link>
+            </Button>
+          )}
         </Flex>
         <SimpleGrid columns={[1, null, 3]} spacingX="40px" spacingY="20px">
           {events?.map((e) => {
@@ -110,18 +112,22 @@ function Events() {
                         詳細
                       </Button>
                     </Link>
-                    <Link to={`/events/${e.id}/edit`} key={e.id}>
-                      <Button variant="ghost" colorScheme="blue">
-                        編集
-                      </Button>
-                    </Link>
-                    <Button
-                      variant="ghost"
-                      colorScheme="blue"
-                      onClick={() => destroyEvent(e.id)}
-                    >
-                      削除
-                    </Button>
+                    {currentUser.is_admin && (
+                      <>
+                        <Link to={`/events/${e.id}/edit`} key={e.id}>
+                          <Button variant="ghost" colorScheme="blue">
+                            編集
+                          </Button>
+                        </Link>
+                        <Button
+                          variant="ghost"
+                          colorScheme="blue"
+                          onClick={() => destroyEvent(e.id)}
+                        >
+                          削除
+                        </Button>
+                      </>
+                    )}
                   </ButtonGroup>
                 </CardFooter>
               </Card>
