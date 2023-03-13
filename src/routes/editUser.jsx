@@ -26,15 +26,11 @@ function EditUser() {
   const [email, setEmail] = useState("");
   const [image, setImage] = useState("");
   const [parts, setParts] = useState([]);
-  const [part_ids, setPartIds] = useState([]);
+  const [partIds, setPartIds] = useState([]);
   const navigate = useNavigate();
   const toast = useToast();
 
   useEffect(() => {
-    circleRef.current?.addEventListener("handleChange", handleChange, {
-      passive: false,
-    });
-
     const f = async () => {
       setUser(currentUser);
       setName(currentUser.name);
@@ -45,19 +41,17 @@ function EditUser() {
       setParts(resPart.data);
     };
     f();
-
-    return () => {
-      circleRef.current?.removeEventListener("handleChange", handleChange);
-    };
   }, []);
 
-  const handleChange = (e) => {
-    const copyPartIds = [...part_ids];
+  const handleChange = (e, id) => {
+    e.preventDefault();
+    const copyPartIds = [...partIds];
     copyPartIds.map((partId) => {
-      if (partId.id == e.target.value) {
-        copyPartIds = copyPartIds.filter((partId) => partId !== e.target.value);
+      console.log(partId);
+      if (partId == id) {
+        copyPartIds = copyPartIds.filter((partId) => partId !== id);
       } else {
-        copyPartIds.push(e.target.value);
+        copyPartIds.push(id);
       }
     });
     setPartIds(copyPartIds);
@@ -139,24 +133,19 @@ function EditUser() {
             />
           </FormControl>
           <FormControl>
-            <CheckboxGroup colorScheme="green">
-              <Stack spacing={[1, 5]} direction={["column", "row"]}>
-                {parts.map((part, index) => {
-                  return (
-                    <FormControl touchAction="none">
-                      <Checkbox
-                        id={part.name}
-                        name={part.name}
-                        value={part.id}
-                        onChange={handleChange}
-                      >
-                        <FormLabel touchAction="none">{part.name}</FormLabel>
-                      </Checkbox>
-                    </FormControl>
-                  );
-                })}
-              </Stack>
-            </CheckboxGroup>
+            {console.log(partIds)}
+            {parts.map((part, index) => {
+              return (
+                <Checkbox
+                  colorScheme="green"
+                  id={part.name}
+                  name={part.name}
+                  onChange={(e) => handleChange(e, part.id)}
+                >
+                  {part.name}
+                </Checkbox>
+              );
+            })}
           </FormControl>
           <FormControl isRequired maxWidth="300px">
             <FormLabel>メールアドレス</FormLabel>
