@@ -61,7 +61,7 @@ function Event() {
     <>
       <Common>
         {event && (
-          <div style={{ margin: "auto", maxWidth: "650px", padding: "5px" }}>
+          <Box maxWidth="650px">
             <Flex my="5">
               <Spacer />
               <ButtonGroup>
@@ -125,7 +125,7 @@ function Event() {
                 </Button>
               </Center>
             </>
-          </div>
+          </Box>
         )}
       </Common>
     </>
