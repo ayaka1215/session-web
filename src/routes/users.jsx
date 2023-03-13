@@ -17,7 +17,7 @@ import {
 import Common from "../components/layout/Common.jsx";
 
 function Users() {
-  const { currentUser, setCurrentUser } = useContext(AuthContext);
+  const { currentUser } = useContext(AuthContext);
   const [users, setUsers] = useState();
   const toast = useToast();
   const navigate = useNavigate();

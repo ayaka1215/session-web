@@ -19,7 +19,7 @@ import {
 import Common from "../components/layout/Common.jsx";
 
 function EditUser() {
-  const { currentUser, setCurrentUser } = useContext(AuthContext);
+  const { currentUser } = useContext(AuthContext);
   const circleRef = useRef(null);
   const [user, setUser] = useState("");
   const [name, setName] = useState("");

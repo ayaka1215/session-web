@@ -7,18 +7,15 @@ import {
 } from "../lib/apiClient/user.js";
 import {
   Box,
-  Heading,
   FormControl,
   FormLabel,
   Input,
-  Textarea,
   ButtonGroup,
   Button,
   VStack,
   useToast,
   Spacer,
   Flex,
-  Center,
   Image,
   Checkbox,
   CheckboxGroup,

@@ -20,7 +20,7 @@ import { format } from "date-fns";
 import ja from "date-fns/locale/ja";
 
 function Event() {
-  const { currentUser, setCurrentUser } = useContext(AuthContext);
+  const { currentUser } = useContext(AuthContext);
   const [event, setEvent] = useState();
   const params = useParams();
   const toast = useToast();

@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect } from "react";
+import React, { useContext } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import Cookies from "js-cookie";
 
@@ -19,7 +19,7 @@ import { signOut } from "../../lib/apiClient/auth.js";
 import { AuthContext } from "../../App.js";
 
 const Header = () => {
-  const { currentUser, setCurrentUser } = useContext(AuthContext);
+  const { currentUser } = useContext(AuthContext);
   const { loading, isSignedIn, setIsSignedIn } = useContext(AuthContext);
   const navigate = useNavigate();
 
