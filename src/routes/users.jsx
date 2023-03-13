@@ -1,6 +1,7 @@
 import { Link, useNavigate } from "react-router-dom";
-import { useState, useEffect, React } from "react";
+import { useState, useEffect, React, useContext } from "react";
 import { getUserAll, deleteUser, permitUser } from "../lib/apiClient/user.js";
+import { AuthContext } from "../App.js";
 import {
   Table,
   Thead,
@@ -16,6 +17,7 @@ import {
 import Common from "../components/layout/Common.jsx";
 
 function Users() {
+  const { currentUser, setCurrentUser } = useContext(AuthContext);
   const [users, setUsers] = useState();
   const toast = useToast();
   const navigate = useNavigate();
@@ -121,11 +123,13 @@ function Users() {
                             <Button>詳細</Button>
                           </Link>
                         </Td>
-                        <Td>
-                          <Button onClick={() => destroyUser(e.id)}>
-                            削除
-                          </Button>
-                        </Td>
+                        {currentUser.id !== e.id && (
+                          <Td>
+                            <Button onClick={() => destroyUser(e.id)}>
+                              削除
+                            </Button>
+                          </Td>
+                        )}
                       </Tr>
                     );
                   })}
