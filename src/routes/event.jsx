@@ -61,7 +61,7 @@ function Event() {
     <>
       <Common>
         {event && (
-          <Box maxWidth="650px">
+          <Box maxWidth="650px" margin="auto">
             <Flex my="5">
               <Spacer />
               <ButtonGroup>
