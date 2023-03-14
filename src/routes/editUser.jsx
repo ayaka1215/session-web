@@ -1,6 +1,10 @@
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect, React, useRef, useContext } from "react";
-import { updateUser, getPartAll } from "../lib/apiClient/user.js";
+import {
+  updateUser,
+  getPartAll,
+  getUserDetail,
+} from "../lib/apiClient/user.js";
 import { AuthContext } from "../App.js";
 import {
   Heading,
@@ -24,6 +28,7 @@ import Common from "../components/layout/Common.jsx";
 
 function EditUser() {
   const { currentUser } = useContext(AuthContext);
+
   const [user, setUser] = useState("");
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -35,18 +40,28 @@ function EditUser() {
 
   useEffect(() => {
     const f = async () => {
+      const resPart = await getPartAll();
+      setParts(resPart.data);
+
       setUser(currentUser);
       setName(currentUser.name);
       setEmail(currentUser.email);
       setImage(currentUser.image);
 
-      const resPart = await getPartAll();
-      setParts(resPart.data);
+      const res = await getUserDetail(currentUser.id);
+      const tmpParts = res.data[0].parts;
+      const tmpPartIds = [];
+      {
+        Object.values(tmpParts).map((tmpPart) => {
+          tmpPartIds.push(String(tmpPart.id));
+        });
+      }
+      setPartIds(tmpPartIds);
     };
     f();
   }, []);
 
-  const handleChange = (e, id) => {
+  const handleChange = (e) => {
     e.preventDefault();
     if (partIds.includes(e.target.value)) {
       setPartIds(partIds.filter((partId) => partId !== e.target.value));
@@ -69,7 +84,6 @@ function EditUser() {
     try {
       const data = createFormData();
       await updateUser(currentUser.id, data);
-
       navigate("/mypage", { replace: true });
       toast({
         title: "ユーザー情報を更新しました。",
@@ -94,6 +108,7 @@ function EditUser() {
     <Common>
       <Heading as="h1" size="lg" noOfLines={1} ml="2">
         マイページ
+        {console.log(partIds)}
       </Heading>
       <Box maxWidth="600px" margin="auto" p="5">
         {user && (
