@@ -13,14 +13,17 @@ import {
   Center,
   Image,
   Checkbox,
-  CheckboxGroup,
   Stack,
+  Text,
+  Box,
+  Flex,
+  Wrap,
+  WrapItem,
 } from "@chakra-ui/react";
 import Common from "../components/layout/Common.jsx";
 
 function EditUser() {
   const { currentUser } = useContext(AuthContext);
-  const circleRef = useRef(null);
   const [user, setUser] = useState("");
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -45,16 +48,11 @@ function EditUser() {
 
   const handleChange = (e, id) => {
     e.preventDefault();
-    const copyPartIds = [...partIds];
-    copyPartIds.map((partId) => {
-      console.log(partId);
-      if (partId == id) {
-        copyPartIds = copyPartIds.filter((partId) => partId !== id);
-      } else {
-        copyPartIds.push(id);
-      }
-    });
-    setPartIds(copyPartIds);
+    if (partIds.includes(e.target.value)) {
+      setPartIds(partIds.filter((partId) => partId !== e.target.value));
+    } else {
+      setPartIds([...partIds, e.target.value]);
+    }
   };
 
   const createFormData = () => {
@@ -97,72 +95,80 @@ function EditUser() {
       <Heading as="h1" size="lg" noOfLines={1} ml="2">
         マイページ
       </Heading>
-      {user && (
-        <VStack spacing={6} mx={2}>
-          {image?.url ? (
-            <Image
-              src={image.url}
-              alt="image"
-              borderRadius="lg"
-              width="300px"
-            />
-          ) : (
-            <Image
-              src={`${process.env.PUBLIC_URL}/user_no_image.png`}
-              alt="no image"
-              borderRadius="lg"
-              width="300px"
-            />
-          )}
-          <FormControl maxWidth="300px">
-            <FormLabel>プロフィール画像</FormLabel>
-            <Input
-              type="file"
-              onChange={(e) => setImage(e.target.files[0])}
-              border="none"
-              padding="1"
-            />
-          </FormControl>
-          <FormControl isRequired maxWidth="300px">
-            <FormLabel>名前</FormLabel>
-            <Input
-              type="text"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-              placeholder="名前を入力してください"
-            />
-          </FormControl>
-          <FormControl>
-            {console.log(partIds)}
-            {parts.map((part, index) => {
-              return (
-                <Checkbox
-                  colorScheme="green"
-                  id={part.name}
-                  name={part.name}
-                  onChange={(e) => handleChange(e, part.id)}
-                >
-                  {part.name}
-                </Checkbox>
-              );
-            })}
-          </FormControl>
-          <FormControl isRequired maxWidth="300px">
-            <FormLabel>メールアドレス</FormLabel>
-            <Input
-              type="text"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              placeholder="メールアドレスを入力してください"
-            />
-          </FormControl>
-        </VStack>
-      )}
-      <Center my="10">
-        <Button colorScheme="teal" onClick={onClick} width="300px">
-          更新する
-        </Button>
-      </Center>
+      <Box maxWidth="600px" margin="auto" p="5">
+        {user && (
+          <VStack spacing={6} mx={2}>
+            {image?.url ? (
+              <Image
+                src={image.url}
+                alt="image"
+                borderRadius="lg"
+                width="300px"
+              />
+            ) : (
+              <Image
+                src={`${process.env.PUBLIC_URL}/user_no_image.png`}
+                alt="no image"
+                borderRadius="lg"
+                width="300px"
+              />
+            )}
+            <FormControl maxWidth="300px">
+              <FormLabel>プロフィール画像</FormLabel>
+              <Input
+                type="file"
+                onChange={(e) => setImage(e.target.files[0])}
+                border="none"
+                padding="1"
+              />
+            </FormControl>
+            <FormControl isRequired width="100%">
+              <FormLabel>名前</FormLabel>
+              <Input
+                type="text"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                placeholder="名前を入力してください"
+              />
+            </FormControl>
+            <FormControl>
+              <FormLabel>担当パート</FormLabel>
+              <Wrap spacing={5}>
+                {parts.map((part) => {
+                  return (
+                    <WrapItem>
+                      <Checkbox
+                        size="sm"
+                        colorScheme="green"
+                        id={part.name}
+                        value={part.id}
+                        checked={partIds.includes(part.id)}
+                        onChange={handleChange}
+                      >
+                        <Text>{part.name}</Text>
+                      </Checkbox>
+                    </WrapItem>
+                  );
+                })}
+              </Wrap>
+            </FormControl>
+            <FormControl isRequired width="100%">
+              <FormLabel>メールアドレス</FormLabel>
+              <Input
+                type="text"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="メールアドレスを入力してください"
+              />
+            </FormControl>
+          </VStack>
+        )}
+        <Center my="10">
+          <Button colorScheme="teal" onClick={onClick} width="300px">
+            更新する
+          </Button>
+        </Center>
+      </Box>
     </Common>
   );
 }
