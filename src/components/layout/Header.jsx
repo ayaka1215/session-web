@@ -2,35 +2,25 @@ import React, { useContext } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import Cookies from "js-cookie";
 
-import { makeStyles } from "@material-ui/core/styles";
-
-import AppBar from "@material-ui/core/AppBar";
-import Toolbar from "@material-ui/core/Toolbar";
-import IconButton from "@material-ui/core/IconButton";
-import MenuIcon from "@material-ui/icons/Menu";
-
-import { Flex, Text, Box, Heading } from "@chakra-ui/react";
+import {
+  Flex,
+  Text,
+  Box,
+  Heading,
+  Menu,
+  MenuButton,
+  MenuList,
+  MenuItem,
+  Button,
+  Image,
+} from "@chakra-ui/react";
 
 import { signOut } from "../../lib/apiClient/auth.js";
 import { AuthContext } from "../../App.js";
 
-const useStyles = makeStyles((theme) => ({
-  iconButton: {
-    marginRight: theme.spacing(2),
-  },
-  title: {
-    flexGrow: 1,
-    textDecoration: "none",
-    color: "inherit",
-  },
-  linkBtn: {
-    textTransform: "none",
-  },
-}));
-
 const Header = () => {
+  const { currentUser } = useContext(AuthContext);
   const { loading, isSignedIn, setIsSignedIn } = useContext(AuthContext);
-  const classes = useStyles();
   const navigate = useNavigate();
 
   const handleSignOut = async (e) => {
@@ -38,7 +28,6 @@ const Header = () => {
       const res = await signOut();
 
       if (res.data.success === true) {
-        // サインアウト時には各Cookieを削除
         Cookies.remove("_access_token");
         Cookies.remove("_client");
         Cookies.remove("_uid");
@@ -59,31 +48,17 @@ const Header = () => {
     if (!loading) {
       if (isSignedIn) {
         return (
-          <Text
-            color="inherit"
-            className={classes.linkBtn}
-            onClick={handleSignOut}
-          >
+          <Text color="inherit" onClick={handleSignOut}>
             ログアウト
           </Text>
         );
       } else {
         return (
           <>
-            <Text
-              component={Link}
-              to="/signin"
-              color="inherit"
-              className={classes.linkBtn}
-            >
+            <Text component={Link} to="/signin" color="inherit">
               Sign in
             </Text>
-            <Text
-              component={Link}
-              to="/signup"
-              color="inherit"
-              className={classes.linkBtn}
-            >
+            <Text component={Link} to="/signup" color="inherit">
               Sign Up
             </Text>
           </>
@@ -96,30 +71,61 @@ const Header = () => {
 
   return (
     <>
-      <AppBar position="static" colorScheme="blue">
-        <Toolbar>
-          <IconButton
-            edge="start"
-            className={classes.iconButton}
-            color="inherit"
-          >
-            <MenuIcon />
-          </IconButton>
-          <Flex minWidth="max-content" alignItems="center" gap="5">
-            <Heading size="md">
-              <Link to="/events">Session App</Link>
-            </Heading>
-            <Text>
-              <Link to="/mypage">マイページ</Link>
-            </Text>
-            <Text>予約一覧</Text>
-            <Text>
-              <Link to="/users">メンバー一覧</Link>
-            </Text>
-            <AuthButtons />
-          </Flex>
-        </Toolbar>
-      </AppBar>
+      <Box as="nav" p="5" borderBottom="1px" borderColor="gray.200">
+        <Flex minWidth="max-content" alignItems="center" gap="3">
+          <Heading size="md">
+            <Link to="/events">Session App</Link>
+          </Heading>
+          <Menu>
+            <MenuButton as={Button}>
+              {currentUser && (
+                <Flex gap="2">
+                  {currentUser.image?.url ? (
+                    <Image
+                      src={currentUser.image.url}
+                      alt="image"
+                      borderRadius="lg"
+                      width="30px"
+                    />
+                  ) : (
+                    <Image
+                      src={`${process.env.PUBLIC_URL}/user_no_image.png`}
+                      alt="no image"
+                      borderRadius="lg"
+                      width="20px"
+                    />
+                  )}
+                  <Text>{currentUser.name}</Text>
+                </Flex>
+              )}
+            </MenuButton>
+            <MenuList>
+              <MenuItem>
+                <Link to="/mypage">マイページ</Link>
+              </MenuItem>
+              <MenuItem>予約一覧</MenuItem>
+              <MenuItem>
+                <AuthButtons />
+              </MenuItem>
+            </MenuList>
+          </Menu>
+          {currentUser.is_admin && (
+            <Menu>
+              <MenuButton as={Button} fontSize={{ base: "md", sm: "sm" }}>
+                管理
+              </MenuButton>
+              <MenuList>
+                <MenuItem>
+                  <Link to="/users">メンバー一覧</Link>
+                </MenuItem>
+                <MenuItem>
+                  <Link to="/events/create">イベント新規作成</Link>
+                </MenuItem>
+              </MenuList>
+            </Menu>
+          )}
+        </Flex>
+      </Box>
     </>
   );
 };

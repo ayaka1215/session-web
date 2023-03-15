@@ -1,6 +1,7 @@
 import { Link, useParams, useNavigate } from "react-router-dom";
-import { useState, useEffect, React } from "react";
+import { useState, useEffect, React, useContext } from "react";
 import { getEventDetail, deleteEvent } from "../lib/apiClient/event.js";
+import { AuthContext } from "../App.js";
 import {
   Heading,
   Text,
@@ -19,6 +20,7 @@ import { format } from "date-fns";
 import ja from "date-fns/locale/ja";
 
 function Event() {
+  const { currentUser } = useContext(AuthContext);
   const [event, setEvent] = useState();
   const params = useParams();
   const toast = useToast();
@@ -61,23 +63,25 @@ function Event() {
     <>
       <Common>
         {event && (
-          <div style={{ margin: "auto", maxWidth: "650px", padding: "5px" }}>
+          <Box maxWidth="650px" margin="auto">
             <Flex my="5">
               <Spacer />
-              <ButtonGroup>
-                <Link to={`/events/${event.id}/edit`}>
-                  <Button variant="ghost" colorScheme="teal">
-                    編集
+              {currentUser.is_admin && (
+                <ButtonGroup>
+                  <Link to={`/events/${event.id}/edit`}>
+                    <Button variant="ghost" colorScheme="teal">
+                      編集
+                    </Button>
+                  </Link>
+                  <Button
+                    variant="ghost"
+                    colorScheme="teal"
+                    onClick={() => destroyEvent(event.id)}
+                  >
+                    削除
                   </Button>
-                </Link>
-                <Button
-                  variant="ghost"
-                  colorScheme="teal"
-                  onClick={() => destroyEvent(event.id)}
-                >
-                  削除
-                </Button>
-              </ButtonGroup>
+                </ButtonGroup>
+              )}
             </Flex>
 
             <>
@@ -120,12 +124,15 @@ function Event() {
                 </Text>
               </Box>
               <Center my="10">
-                <Button colorScheme="teal" width="300px">
-                  このイベントを予約する
-                </Button>
+                {console.log(currentUser.is_permitted)}
+                {!currentUser.is_admin && (
+                  <Button colorScheme="teal" width="300px">
+                    このイベントを予約する
+                  </Button>
+                )}
               </Center>
             </>
-          </div>
+          </Box>
         )}
       </Common>
     </>
