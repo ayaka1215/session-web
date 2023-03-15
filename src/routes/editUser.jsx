@@ -34,7 +34,7 @@ function EditUser() {
   const [email, setEmail] = useState("");
   const [image, setImage] = useState("");
   const [parts, setParts] = useState([]);
-  const [partIds, setPartIds] = useState([]);
+  const [partIds, setPartIds] = useState([0]);
   const navigate = useNavigate();
   const toast = useToast();
 
@@ -53,7 +53,7 @@ function EditUser() {
       const tmpPartIds = [];
       {
         Object.values(tmpParts).map((tmpPart) => {
-          tmpPartIds.push(String(tmpPart.id));
+          tmpPartIds.push(tmpPart.id);
         });
       }
       setPartIds(tmpPartIds);
@@ -63,10 +63,10 @@ function EditUser() {
 
   const handleChange = (e) => {
     e.preventDefault();
-    if (partIds.includes(e.target.value)) {
-      setPartIds(partIds.filter((partId) => partId !== e.target.value));
+    if (partIds.includes(Number(e.target.value))) {
+      setPartIds(partIds.filter((partId) => partId !== Number(e.target.value)));
     } else {
-      setPartIds([...partIds, e.target.value]);
+      setPartIds([...partIds, Number(e.target.value)]);
     }
   };
 
@@ -108,7 +108,6 @@ function EditUser() {
     <Common>
       <Heading as="h1" size="lg" noOfLines={1} ml="2">
         マイページ
-        {console.log(partIds)}
       </Heading>
       <Box maxWidth="600px" margin="auto" p="5">
         {user && (
